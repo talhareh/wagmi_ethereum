@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 30 30">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #f0b90b;
+        fill-rule: evenodd;
+      }
+
+      .cls-1, .cls-2 {
+        stroke-width: 0px;
+      }
+
+      .cls-2 {
+        fill: #fff;
+      }
+    </style>
+  </defs>
+  <path class="cls-1" d="M15,0c8.3,0,15,6.7,15,15s-6.7,15-15,15S0,23.3,0,15,6.7,0,15,0h0Z"/>
+  <path class="cls-2" d="M8.2,15v4s3.4,2,3.4,2v2.3l-5.3-3.1v-6.3l2,1.2h0ZM8.2,11v2.3l-2-1.2v-2.3l2-1.2,2,1.2-2,1.2h0ZM13,9.9l2-1.2,2,1.2-2,1.2-2-1.2h0Z"/>
+  <path class="cls-2" d="M9.7,18.1v-2.3l2,1.2v2.3l-2-1.2h0ZM13,21.8l2,1.2,2-1.2v2.3l-2,1.2-2-1.2v-2.3h0ZM19.8,9.9l2-1.2,2,1.2v2.3l-2,1.2v-2.3l-2-1.2h0ZM21.7,19v-4s2-1.2,2-1.2v6.3l-5.3,3.1v-2.3l3.4-2h0Z"/>
+  <polygon class="cls-2" points="20.3 18.1 18.4 19.3 18.4 17 20.3 15.8 20.3 18.1"/>
+  <path class="cls-2" d="M20.3,11.9v2.3s-3.4,2-3.4,2v4l-2,1.2-2-1.2v-4l-3.4-2v-2.3l2-1.2,3.4,2,3.4-2,2,1.2h0ZM9.7,7.9l5.3-3.1,5.3,3.1-2,1.2-3.4-2-3.4,2-2-1.2h0Z"/>
+</svg>

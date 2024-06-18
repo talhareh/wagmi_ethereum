@@ -344,12 +344,14 @@ export default function Header() {
                         target="_blank"
                         sx={{
                           borderRadius: "50%",
-                          color: i == 0 ? "#F8922A" : "#fff",
-                          backgroundColor: i == 0 ? "#fff" : "#F8922A",
-                          fontSize: "18px",
-                          "&:hover": {
+                          color: "#000",
                           
-                            backgroundColor: i == 0 ? "#fff" : "#F8922A",
+                          fontSize: "1px",
+                          marginRight:1,
+                          "&:hover": {
+                            backgroundColor:'transparent',
+                            boxShadow:'none',
+                            color: '#F8922A',
                           },
                         }}
                       >

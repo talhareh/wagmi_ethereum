@@ -35,6 +35,7 @@ function HeroSection() {
                 p: 7,
                 px: { xs: 2, sm: matches1 ? 3 : 7 },
                 py: { xs: 3, sm: 7 },
+                margin: { xs: "5px 0 0 0", sm: "0px 60px 0px 55px", md: "0px 60px 0px 55px", lg: "0px 60px 0px 55px" },
               }}
               position={"relative"}
               minHeight={{

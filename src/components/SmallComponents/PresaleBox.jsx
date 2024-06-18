@@ -462,7 +462,7 @@ function PresaleBox() {
                   textTransform: "uppercase",
                 }}
               >
-                Token Sold
+                Tokens Sold
               </Typography>
               <Box
                 sx={{
@@ -473,11 +473,11 @@ function PresaleBox() {
               >
                 <Box
                   component="img"
-                  mr={0.5}
+                  mr={0.6}
                   src={Token}
                   alt=""
                   sx={{
-                    width: { xs: "16px", sm: "18px" },
+                    width: { xs: "18px", sm: "22px" },
                   }}
                 />
                 <Typography
@@ -524,7 +524,8 @@ function PresaleBox() {
                   src={Dollar}
                   alt=""
                   sx={{
-                    width: "18px",
+                    width: { xs: "18px", sm: "22px" },
+                    
                   }}
                 />
                 <Typography
@@ -555,6 +556,7 @@ function PresaleBox() {
                 height: { xs: "1px", sm: "1.5px" },
                 background: "#fff",
                 flexGrow: 1,
+                
               }}
             />
 
@@ -567,6 +569,7 @@ function PresaleBox() {
                 color: "#ffff",
                 mx: 2,
                 fontFamily: "ProductSansRegular",
+                
               }}
             >
               {account ? "BUY NOW" : "CONNECT WALLET"}
@@ -746,7 +749,7 @@ function PresaleBox() {
                       fontSize: { xs: "10px", sm: "13px" },
                       fontWeight: "700",
                       fontFamily: "ProductSansRegular",
-                      letterSpacing:0.5,
+                      letterSpacing:0.7,
                     }}
                   >
                     {`BUY WITH ${text}`}
@@ -778,7 +781,7 @@ function PresaleBox() {
                         src={buyWith === "BNB" ? Bnb : Usdt}
                         sx={{
                           width: { xs: "18px", sm: "22px" },
-                          marginLeft: "-10px",
+                          marginLeft: "-6px",
                           marginRight: { xs: "8px", sm: "10px" },
                         }}
                       />
@@ -805,7 +808,7 @@ function PresaleBox() {
                         src={Token}
                         sx={{
                           width: { xs: "18px", sm: "22px" },
-                          marginLeft: "-10px",
+                          marginLeft: "-6px",
                           marginRight: { xs: "8px", sm: "10px" },
                         }}
                       />
@@ -858,10 +861,13 @@ function PresaleBox() {
               textTransform: "uppercase",
               borderRadius: "50px",
               py: 1,
+              transition: "transform 0.4s ease-out",
               "&:hover": {
-                color: "#fff",
-                backgroundColor: "#F8922A",
-              },
+                  
+                  color: "#fff",
+                  backgroundColor:"#F8922A",
+                  transform: "scale(1.05)",
+                }
             }}
             onClick={account ? () => buyHandler() : async () => await open()}
           >

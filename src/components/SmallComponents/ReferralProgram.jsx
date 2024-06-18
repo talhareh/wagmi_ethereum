@@ -160,7 +160,9 @@ export default function ReferralProgram({
                   alignItems: "center",
                 }}
               >
-                <Box component="img" mr={0.5} src={Dollar} alt="" />
+                <Box component="img" mr={0.5} src={Dollar} alt=""sx={{
+                    width: { xs: "18px", sm: "22px" },
+                  }} />
                 <Typography
                   sx={{
                     fontFamily: "ProductSansRegular",
@@ -199,7 +201,14 @@ export default function ReferralProgram({
                   alignItems: "center",
                 }}
               >
-                <Box component="img" mr={0.5} src={Dollar} alt="" />
+                <Box 
+                  component="img" 
+                  mr={0.5} 
+                  src={Dollar} 
+                  alt="" 
+                  sx={{
+                    width: { xs: "18px", sm: "22px" },
+                  }} />
                 <Typography
                   sx={{
                     fontFamily: "ProductSansRegular",

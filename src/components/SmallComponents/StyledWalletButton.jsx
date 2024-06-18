@@ -27,7 +27,7 @@ export const ExampleButton = ({ width }) => {
           opacity: 0.8,
           color: "#fff",
           backgroundColor: "#0A3FBA",
-          transform: "scale(1.1)",
+          transform: "scale(1.05)",
         },
       }}
       onClick={async () => await open()}
