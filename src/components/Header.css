@@ -1,0 +1,27 @@
+@keyframes fallFromAbove {
+    0%{
+        transform:translateY(-200%);
+        opacity:0;
+    }
+
+    100%{
+        transform:translateY(0);
+        opacity: 1;
+    }
+    
+}
+
+
+.fade-down1{
+    animation:fallFromAbove 500ms ease-out;
+}
+
+.fade-down2{
+    animation:fallFromAbove 1200ms ease-out;
+}
+.fade-down3{
+    animation:fallFromAbove 1000ms ease-out;
+}
+.fade-down4{
+    animation:fallFromAbove 1250ms ease-out;
+}

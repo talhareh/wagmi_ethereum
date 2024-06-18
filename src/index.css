@@ -1,0 +1,37 @@
+@font-face {
+  font-family: "Guardians";
+  src: url("/src/assets/fonts/Guardians.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "ProductSansBlack";
+  src: url("/src/assets/fonts/ProductSans-Black.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "ProductSansLight";
+  src: url("/src/assets/fonts/ProductSans-Light.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "ProductSansRegular";
+  src: url("/src/assets/fonts/ProductSans-Regular.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+body {
+  margin: 15px 60px 0px 55px;
+  padding: 0px 0px 0px 0px;
+  background-color: #EDEDED;
+}
+.MuiInputBase-root.MuiOutlinedInput-root {
+  padding-right: 1px;
+}
+
+#claim-tokens .MuiPaper-root.MuiPaper-elevation,
+#referral-program .MuiPaper-root.MuiPaper-elevation {
+  margin: 16px;
+}
