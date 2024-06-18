@@ -130,8 +130,8 @@ export default function ReferralProgram({
             }}
           >
             Earn up to 2.5% for referrals and 5% for being referred in USDT or
-            BNB. To Activate, Minimum 320 BTCFANS Token purchase required.
-            Rewards alien with purchase currency.
+            BNB. To Activate, Minimum $20 worth of BTCFANS Tokens purchase required.
+            Rewards align with purchase currency.
           </Typography>
         </Box>
         <Grid container mt={1.5}>

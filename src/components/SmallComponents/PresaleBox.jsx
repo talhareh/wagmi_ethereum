@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars*/
 import React, { useCallback, useContext, useEffect, useState } from "react";
 
 import {
@@ -25,6 +26,7 @@ import {
 } from "../../ConnectivityAssets/hooks";
 import { formatUnits, isAddress, parseUnits } from "viem";
 import { presaleAddress } from "../../ConnectivityAssets/environment";
+import "../Header.css"
 
 function PresaleBox() {
   const { account } = useContext(AppContext);
@@ -312,7 +314,7 @@ function PresaleBox() {
           >
             BUY $BTCFANS TOKENS
           </Typography>
-          <Box
+          <Box className="pulsate"
             sx={{
               display: "flex",
               alignItems: "center",
@@ -333,11 +335,14 @@ function PresaleBox() {
               }}
             />
             <Box
+              
               sx={{
                 color: "#fff",
                 fontFamily: "ProductSansRegular",
                 fontSize: "12px",
+                
               }}
+              
             >
               {preSaleEndedStatus ? "End" : "Live"}
             </Box>
@@ -673,7 +678,7 @@ function PresaleBox() {
                       color: "#fff",
                     }}
                   >
-                    {userReward}
+                    {Math.trunc(userReward)}
                   </Typography>
                 </Box>
               </Box>
@@ -738,9 +743,10 @@ function PresaleBox() {
                     variant="subtitle2"
                     sx={{
                       color: "#000",
-                      fontSize: { xs: "10px", sm: "11px" },
+                      fontSize: { xs: "10px", sm: "13px" },
                       fontWeight: "700",
                       fontFamily: "ProductSansRegular",
+                      letterSpacing:0.5,
                     }}
                   >
                     {`BUY WITH ${text}`}

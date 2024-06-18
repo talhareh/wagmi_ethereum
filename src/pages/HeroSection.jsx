@@ -74,6 +74,7 @@ function HeroSection() {
                   color: "#F8922A",
                   position: "relative",
                   zIndex: 3,
+                
                 }}
               >
                 REVOLUTION
