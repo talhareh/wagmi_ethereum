@@ -12,30 +12,49 @@ import { Elon } from "../components/SmallComponents/Images";
 import PresaleBox from "../components/SmallComponents/PresaleBox";
 import "../components/Header.css"
 
+
+
 function HeroSection() {
   //const [amount, setAmount] = useState("");
   const mobileMatches = useMediaQuery("(max-width:390px)");
   const matches1 = useMediaQuery("(max-width:700px)");
 
+  const openPDF = () => {
+    window.open('./whitepaper.pdf', '_blank');
+  };
+
   return (
     <>
       <Header />
-      <Box component="section" maxWidth={"100%"} py={{ xs: 0.5, sm: 1 }}>
-        <Container maxWidth="xl" sx={{ px: { xs: 1, md: 3 } }}>
+      <Box 
+        component="section" 
+        maxWidth={"100%"} 
+        py={{ xs: 0.5, sm: 1 }}
+        sx={{
+          margin: { xs: "5px 0 0 0", sm: "0px 60px 0px 55px", md: "0px 60px 0px 55px", lg: "0px 60px 0px 55px" },
+        }}
+        >
+        <Container 
+          maxWidth="xl" 
+          sx={{ 
+                px: { xs: 1, md: 3 },
+                 
+            }}>
           <Grid
             container
-            sx={{ backgroundColor: "#023FBA", borderRadius: "25px" }}
+            sx={{ 
+                backgroundColor: "#023FBA", borderRadius: "25px" }}
           >
             <Grid
               item
               xs={12}
               md={12}
-              lg={7.5}
+              lg={6.5}
               sx={{
                 p: 7,
                 px: { xs: 2, sm: matches1 ? 3 : 7 },
                 py: { xs: 3, sm: 7 },
-                margin: { xs: "5px 0 0 0", sm: "0px 60px 0px 55px", md: "0px 60px 0px 55px", lg: "0px 60px 0px 55px" },
+                
               }}
               position={"relative"}
               minHeight={{
@@ -131,6 +150,7 @@ function HeroSection() {
                   Audit Report
                 </Button>
                 <Button
+                  onClick= {openPDF}
                   sx={{
                     textTransform: "capitalize",
                     py: { xs: 0.3, sm: 1 },

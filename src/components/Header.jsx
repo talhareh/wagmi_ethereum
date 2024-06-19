@@ -215,7 +215,14 @@ export default function Header() {
   return (
     <>
     
-      <Box component="section" maxWidth={"100%"} py={0.5} >
+      <Box 
+        component="section" 
+        maxWidth={"100%"} 
+        py={0.5} 
+        sx={{
+          margin: { xs: "5px 0 0 0", sm: "0px 60px 0px 55px", md: "0px 60px 0px 55px", lg: "0px 60px 0px 55px" },
+        }}
+      >
       
         <Container maxWidth="xl" sx={{ px: { xs: 1, md: 3 } }}>
         
