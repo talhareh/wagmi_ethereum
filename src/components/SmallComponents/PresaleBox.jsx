@@ -433,7 +433,7 @@ function PresaleBox() {
                 fontFamily: "ProductSansRegular",
               }}
             >
-              LISTING PRICE = $0.00065
+              LISTING PRICE = $0.00003
             </Typography>
           </Box>
         </Box>

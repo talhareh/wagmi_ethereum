@@ -78,7 +78,7 @@ function HeroSection() {
                   zIndex: 3,
                 }}
               >
-                STEP INTO THE FANS
+                JOIN THE WORLD OF
               </Typography>
               <Typography
                 variant="h1"
@@ -97,7 +97,7 @@ function HeroSection() {
                 
                 }}
               >
-                REVOLUTION
+                #BITCOINISM
               </Typography>
               <Typography
                 sx={{
@@ -191,7 +191,7 @@ function HeroSection() {
               xs={12}
               md={10}
               mx={{ xs: 0, md: "auto", lg: 0 }}
-              lg={4.5}
+              lg={5.5}
               px={{ xs: 0, sm: 3.5 }}
               py={{ xs: 2, sm: 3.5 }}
               pt={{ xs: 0, lg: 3.5 }}
