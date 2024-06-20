@@ -625,7 +625,7 @@ function PresaleBox() {
                     src={Token}
                     alt=""
                     sx={{
-                      width: { xs: "16px", sm: "18px" },
+                      width: { xs: "18px", sm: "22px" },
                     }}
                   />
                   <Typography
@@ -671,7 +671,7 @@ function PresaleBox() {
                     src={Dollar}
                     alt=""
                     sx={{
-                      width: "18px",
+                      width: {xs:'18px', sm:'22px'},
                     }}
                   />
                   <Typography
@@ -772,6 +772,7 @@ function PresaleBox() {
                 type="text"
                 placeholder="Enter Amount"
                 color="rgba(0,0,0,0.5)"
+                
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="end">

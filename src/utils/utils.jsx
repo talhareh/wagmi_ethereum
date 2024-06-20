@@ -23,6 +23,7 @@ export const ConectivityProvider = ({ children }) => {
       account: address ?? null,
     });
   }, [isDisconnected, address]);
+  
   return (
     <AppContext.Provider
       value={{

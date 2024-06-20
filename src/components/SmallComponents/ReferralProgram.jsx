@@ -129,9 +129,10 @@ export default function ReferralProgram({
               fontSize: "14px",
             }}
           >
-            Earn up to 2.5% for referrals and 5% for being referred in USDT or
-            BNB. To Activate, Minimum $20 worth of $BTCFANS Tokens purchase required.
-            Rewards align with purchase currency.
+            Earn 2.5% for referring others, 5% for being referred, and an additional
+             1% for second-level referrals. To activate, a minimum purchase of $20 worth 
+             of BTCFANS Tokens is required. Rewards are given in the same currency 
+             used for the purchase.
           </Typography>
         </Box>
         <Grid container mt={1.5}>

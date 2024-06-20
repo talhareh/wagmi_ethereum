@@ -1,5 +1,5 @@
-import tokenAbi from "./tokenAbi.json";
-import presaleAbi from "./presaleAbi.json";
+import tokenAbi from "./testTokenabi.json";
+import presaleAbi from "./testPresaleAbi.json";
 import usdtAbi from "./usdtAbi.json";
 import { tokenAddress, presaleAddress, usdtAddress } from "./environment";
 import { readContract, writeContract } from "wagmi/actions";

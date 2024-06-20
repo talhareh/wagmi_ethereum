@@ -68,7 +68,7 @@ export default function NetworkSwitch({ open, setOpen }) {
             alignItems="center"
             width={{ xs: "35%", sm: "25%" }}
           >
-            <Box component={"img"} width="100%" src={errorPng} alt="" />
+            <Box component={"img"} width="50%" src={errorPng} alt="" />
           </Box>
           <Typography
             mt={2}

@@ -79,7 +79,7 @@ export default function ClaimTokens({
               fontSize: "14px",
             }}
           >
-            Participants can claim their allocated $BTCFANS tokens at the end of
+            Participants can claim their allocated <span style={{fontWeight:'600px'}}>BTCFANS</span> tokens at the end of
             the presale. We appreciate your patience and look forward to your
             successful participation
           </Typography>

@@ -1,4 +1,5 @@
 //import { useState } from "react";
+/* eslint-disable no-unused-vars*/
 import {
   Box,
   Button,
@@ -49,10 +50,10 @@ function HeroSection() {
               item
               xs={12}
               md={12}
-              lg={6.5}
+              lg={7}
               sx={{
                 p: 7,
-                px: { xs: 2, sm: matches1 ? 3 : 7 },
+                px: { xs: 3, sm: matches1 ? 3 : 7 },
                 py: { xs: 3, sm: 7 },
                 
               }}
@@ -76,6 +77,7 @@ function HeroSection() {
                   color: "#fff",
                   position: "relative",
                   zIndex: 3,
+                  wordSpacing:{sm:-20.5, xs: -10}
                 }}
               >
                 JOIN THE WORLD OF
@@ -112,21 +114,20 @@ function HeroSection() {
                   zIndex: 3,
                 }}
               >
-                Step into the fans revolution. Join this presale journey
-                <br />
-                to be part of reshaping the intersection of
-                <br />
-                technology and finance.
+                
+                 
+                
+                 Engage with the revolution and connect with a community of passionate <br/>Bitcoin enthusiasts. 
               </Typography>
               <Box
                 sx={{
                   display: "flex",
                   justifyContent: " start",
                   alignItems: "center",
-                  position: { xs: "relative", lg: "absolute" },
-                  bottom: { xs: "unset", lg: "40%" },
+                  position: "relative",
+
                   zIndex: 3,
-                  mt: { xs: 2, lg: 0 },
+                  mt: { xs: 2, lg: 2 },
                 }}
               >
                 <Button
@@ -142,12 +143,13 @@ function HeroSection() {
                     color: "#fff",
                     backgroundColor: "#365ACB",
                     mr: 1,
+                    
                     "&:hover": {
                       backgroundColor: "#F8922A",
                     },
                   }}
                 >
-                  Audit Report
+                  Audit
                 </Button>
                 <Button
                   onClick= {openPDF}
@@ -171,19 +173,7 @@ function HeroSection() {
                 </Button>
               </Box>
             
-              <Box
-                component="img"
-                sx={{
-                  position: "absolute",
-                  right: 0,
-                  bottom: 0,
-                  maxWidth: { xs: "130px", sm: matches1 ? "250px" : "414px" },
-                  zIndex: 1,
-                  userDrag:"none"
-                }}
-                src={Elon}
-                alt=""
-              />
+              
               
             </Grid>
             <Grid
@@ -191,9 +181,9 @@ function HeroSection() {
               xs={12}
               md={10}
               mx={{ xs: 0, md: "auto", lg: 0 }}
-              lg={5.5}
+              lg={5}
               px={{ xs: 0, sm: 3.5 }}
-              py={{ xs: 2, sm: 3.5 }}
+              py={{ xs: 0, sm: 3.5 }}
               pt={{ xs: 0, lg: 3.5 }}
             >
               <PresaleBox />

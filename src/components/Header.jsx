@@ -1,12 +1,12 @@
-import { useContext, useState } from "react";
+import  { useContext, useState } from "react";
 import {
   Container,
   useMediaQuery,
-  List,
+  
   ListItemText,
   Box,
-  Drawer,
-  ListItemButton,
+  Menu,
+  MenuItem,
   IconButton,
   Stack,
 } from "@mui/material";
@@ -31,29 +31,9 @@ const navArray = [
     text: "Blog",
     link: "https://bitcoinfansclub.com/blogs",
   },
-
 ];
 
 const socialArray = [
-  
-  {
-    icon: <XIcon sx={{ fontSize: "18px" }} />,
-    link: "https://x.com/bitcoinfansclub",
-  },
-  {
-    icon: <InstagramIcon sx={{ fontSize: "18px" }} />,
-    link: "https://www.instagram.com/bitcoinfansclub",
-  },
-  {
-    icon: <TelegramIcon sx={{ fontSize: "18px", }} />,
-    link: "https://t.me/bitcoinfansclubofficial",
-  },
-
-  
-];
-
-const socialArrayMobile = [
-  
   {
     icon: <XIcon sx={{ fontSize: "18px" }} />,
     link: "https://x.com/bitcoinfansclub",
@@ -70,188 +50,121 @@ const socialArrayMobile = [
 
 export default function Header() {
   const { adminAddress, account } = useContext(AppContext);
-  const [state, setState] = useState(false);
   const matches1 = useMediaQuery("(max-width:1279px)");
   const matches2 = useMediaQuery("(max-width:1050px)");
-  const toggleDrawer = (open) => (event) => {
-    if (
-      event.type === "keydown" &&
-      (event.key === "Tab" || event.key === "Shift")
-    ) {
-      return;
-    }
-    setState(open);
+
+  const [anchorEl, setAnchorEl] = useState(null);
+  
+  const handleMenuOpen = (event) => {
+    setAnchorEl(event.currentTarget);
   };
 
-  const list = () => (
-    <Box
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+
+  const dropdownMenu = (
+    <Menu
+      anchorEl={anchorEl}
+      open={Boolean(anchorEl)}
+      onClose={handleMenuClose}
       sx={{
-        width: 250,
+        backgroundColor: '#fff',
+        borderRadius: '15px',
+        padding: '20px',
+        boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)',
+        '& .MuiMenuItem-root': {
+          fontSize: '16px',
+          fontWeight: 'bold',
+          color: '#000',
+          '&:hover': {
+            backgroundColor: 'transparent',
+          },
+        },
       }}
-      role="presentation"
-      onClick={toggleDrawer(false)}
-      onKeyDown={toggleDrawer(false)}
+      MenuListProps={{
+        sx: {
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '10px',
+        },
+      }}
     >
-      <Box display="flex" justifyContent="center" my={2}>
-        <Link to="/" style={{ textDecoration: "none" }}>
-          <Box component="img" width="160px" src={logo} alt="Logo" />
-        </Link>
-      </Box>
-      <List>
-        {navArray.map(({ text, link }, index) => (
-          <ListItemButton key={index + 3}>
-            {text.toLowerCase() !== "whitepaper" ? (
-              <HashLink
-                smooth
-                to={link}
-                style={{ textDecoration: "none", margin: "auto" }}
-              >
-                <ListItemText
-                  sx={{
-                    textAlign: "left",
-                    cursor: "pointer",
-                    color: "#000",
-                    ".MuiTypography-root": {
-                      fontSize: "20px",
-                      fontFamily: "ProductSansRegular",
-                      "&:hover": {
-                        color: "#15acff",
-                        transition: "0.3s",
-                      },
-                    },
-                  }}
-                  primary={text}
-                />
-              </HashLink>
-            ) : (
-              <a
-                href={link}
-                target="_blank"
-                rel="noreferrer"
-                style={{
-                  textDecoration: "none",
-                }}
-              >
-                <ListItemText
-                  sx={{
-                    textAlign: "center",
-                    cursor: "pointer",
-                    color: "#000",
-                    ".MuiTypography-root": {
-                      fontSize: "20px",
-                      fontFamily: "ProductSansRegular",
-                      "&:hover": {
-                        color: "#15acff",
-                        transition: "0.3s",
-                      },
-                    },
-                  }}
-                  primary={text}
-                />
-              </a>
-            )}
-          </ListItemButton>
-        ))}
-        {account?.toLowerCase() === adminAddress?.toLowerCase() && (
-          <ListItemButton>
+      {navArray.map(({ text, link }, index) => (
+        <MenuItem key={index + 3} onClick={handleMenuClose} sx={{ padding: '10px 20px' }}>
+          {text.toLowerCase() !== "whitepaper" ? (
             <HashLink
               smooth
-              to={"/admin"}
-              style={{ textDecoration: "none", margin: "auto" }}
+              to={link}
+              style={{ textDecoration: "none", color: "#000" }}
             >
-              <ListItemText
-                sx={{
-                  textAlign: "center",
-                  cursor: "pointer",
-                  color: "#000",
-                  ".MuiTypography-root": {
-                    fontSize: "20px",
-                    fontFamily: "ProductSansRegular",
-                    "&:hover": {
-                      color: "#15acff",
-                      transition: "0.3s",
-                    },
-                  },
-                }}
-                primary={"Admin"}
-              />
+              <ListItemText primary={text} />
             </HashLink>
-          </ListItemButton>
-        )}
-      </List>
-      <Box mt={1} display="flex" justifyContent="center">
-        {/* <HashLink
-          smooth
-          to="/#buy"
-          style={{ textDecoration: "none", margin: "auto" }}
-        > */}
-        {/* <Button
-            sx={{
-              color: "#fff",
-              backgroundColor: "#F8922A",
-              textTransform: "capitalize",
-              fontFamily: "ProductSansRegular",
-              fontWeight: 600,
-              letterSpacing: "2px",
-              borderRadius: "10px",
-              px: 2,
-              py: 1.5,
-              fontSize: "16px",
-              "&:hover": {
-                opacity: 0.8,
+          ) : (
+            <a
+              href={link}
+              target="_blank"
+              rel="noreferrer"
+              style={{
+                textDecoration: "none",
                 color: "#fff",
-                backgroundColor: "#F8922A",
-              },
-            }}
+                backgroundColor: '#ff7f3f',
+                borderRadius: '10px',
+                padding: '10px 20px',
+                display: 'inline-block'
+              }}
+            >
+              <ListItemText primary={text} />
+            </a>
+          )}
+        </MenuItem>
+      ))}
+      {account?.toLowerCase() === adminAddress?.toLowerCase() && (
+        <MenuItem onClick={handleMenuClose} sx={{ padding: '10px 20px' }}>
+          <HashLink
+            smooth
+            to={"/admin"}
+            style={{ textDecoration: "none", color: "#000" }}
           >
-            Connect Wallet
-          </Button> */}
-        <ExampleButton width={"180px"} />
-        {/* </HashLink> */}
-      </Box>
-    </Box>
+            <ListItemText primary={"Admin"} />
+          </HashLink>
+        </MenuItem>
+      )}
+    </Menu>
   );
 
   return (
     <>
-    
-      <Box 
-        component="section" 
-        maxWidth={"100%"} 
-        py={0.5} 
+      <Box
+        component="section"
+        maxWidth={"100%"}
+        py={0.5}
         sx={{
           margin: { xs: "5px 0 0 0", sm: "0px 60px 0px 55px", md: "0px 60px 0px 55px", lg: "0px 60px 0px 55px" },
         }}
       >
-      
         <Container maxWidth="xl" sx={{ px: { xs: 1, md: 3 } }}>
-        
           <Box
             display="flex"
             justifyContent="space-between"
             alignItems="center"
-            
             sx={{
               px: 0,
-              py: { xs: 0, sm: 0.7},
-              paddingRight:2,
+              py: { xs: 0, sm: 0.7 },
+              paddingRight: 2,
               borderRadius: matches2 ? "25px" : "25px",
               boxShadow: "0 .125rem .25rem rgba(0, 0, 0, .075)",
               background: "#F7F7F7",
-              
             }}
           >
-            
-            {/*box starts here */}
-            
             <Box display="flex" alignItems="center" gap={6} 
-              sx= {{
+              sx={{
                   paddingTop:1.3,
                   paddingLeft:1.4
               }}
             >
               <Link to="/" style={{ textDecoration: "none" }}>
-                <Box 
+                <Box
                   className="fade-down1"
                   component="img"
                   width={{ xs: "110px", sm: "120px" }}
@@ -270,7 +183,7 @@ export default function Header() {
                         to={link}
                         style={{ textDecoration: "none" }}
                       >
-                        <StyledText >{text}</StyledText>
+                        <StyledText>{text}</StyledText>
                       </HashLink>
                     ) : (
                       <a
@@ -306,37 +219,35 @@ export default function Header() {
                 <Stack
                   flexDirection="row"
                   gap={1}
-                  
                   sx={{
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
                   }}
                 >
-                  <Box sx = {{marginRight:5}}>
-                  {socialArray.map(({ icon, link }, index) => (
-                    <IconButton
-                      key={index + 2}
-                      href={link}
-                      target="_blank"
-                      sx={{
-                        borderRadius: "50%",
-                        color: '#000',
-                        
-                        fontSize: "16px",
-                        px: 3,
-                        width: "30px",
-                        height: "30px",
-                        '&:hover': {
-                          backgroundColor:'transparent',
-                          boxShadow:'none',
-                          color: '#F8922A',
-                        }
-                      }}
-                    >
-                      {icon}
-                    </IconButton>
-                  ))}
+                  <Box sx={{ marginRight: 5 }}>
+                    {socialArray.map(({ icon, link }, index) => (
+                      <IconButton
+                        key={index + 2}
+                        href={link}
+                        target="_blank"
+                        sx={{
+                          borderRadius: "50%",
+                          color: '#000',
+                          fontSize: "16px",
+                          px: 3,
+                          width: "30px",
+                          height: "30px",
+                          '&:hover': {
+                            backgroundColor: 'transparent',
+                            boxShadow: 'none',
+                            color: '#F8922A',
+                          }
+                        }}
+                      >
+                        {icon}
+                      </IconButton>
+                    ))}
                   </Box>
                   <ExampleButton width={"190px"} />
                 </Stack>
@@ -344,29 +255,28 @@ export default function Header() {
                 <>
                   <Stack flexDirection="row" gap={1} alignItems="center">
                     <Box>
-                    {socialArrayMobile.map(({ icon, link }, i) => (
-                      <IconButton
-                        key={i + 5}
-                        href={link}
-                        target="_blank"
-                        sx={{
-                          borderRadius: "50%",
-                          color: "#000",
-                          
-                          fontSize: "1px",
-                          marginRight:1,
-                          "&:hover": {
-                            backgroundColor:'transparent',
-                            boxShadow:'none',
-                            color: '#F8922A',
-                          },
-                        }}
-                      >
-                        {icon}
-                      </IconButton>
-                    ))}
+                      {socialArray.map(({ icon, link }, i) => (
+                        <IconButton
+                          key={i + 5}
+                          href={link}
+                          target="_blank"
+                          sx={{
+                            borderRadius: "50%",
+                            color: "#000",
+                            fontSize: "1px",
+                            marginRight: 1,
+                            "&:hover": {
+                              backgroundColor: 'transparent',
+                              boxShadow: 'none',
+                              color: '#F8922A',
+                            },
+                          }}
+                        >
+                          {icon}
+                        </IconButton>
+                      ))}
                     </Box>
-                    <IconButton onClick={toggleDrawer(true)}>
+                    <IconButton onClick={handleMenuOpen}>
                       <MenuIcon
                         style={{
                           fontSize: "30px",
@@ -375,31 +285,14 @@ export default function Header() {
                         }}
                       />
                     </IconButton>
+                    {dropdownMenu}
                   </Stack>
-
-                  <Drawer
-                    anchor="left"
-                    open={state}
-                    onClose={toggleDrawer(false)}
-                    sx={{
-                      display: { xs: matches2 ? "flex" : "none" },
-                      ".MuiDrawer-paper": {
-                        backgroundColor: "#fafbe8",
-                        borderRight: "1px solid #000",
-                      },
-                    }}
-                  >
-                    {list()}
-                  </Drawer>
                 </>
               )}
             </Box>
           </Box>
-        
         </Container>
-        
       </Box>
-      
     </>
   );
 }

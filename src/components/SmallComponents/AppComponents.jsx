@@ -128,7 +128,7 @@ export const StyledInput = ({ color, borderColor, ...props }) => {
           paddingTop: { xs: "10px", sm: "16px" },
           paddingBottom: { xs: "10px", sm: "16px" },
 
-          fontSize: { ss: "13px", sm: "15px" },
+          fontSize: { xs: "11px", sm: "15px" },
           fontWeight: "600",
           fontFamily: "ProductSansRegular",
           lineHeight: { xs: "28px", sm: "32px" },
