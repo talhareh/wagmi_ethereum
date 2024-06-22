@@ -263,13 +263,13 @@ export default function ReferralProgram({
               mb: 0.5,
             }}
           >
-            Enter Your Referral Code
+           Referral Code
           </Typography>
           <Stack width="100%">
             <StyledInputTwo
               type="text"
               bgColor={"#fff"}
-              placeholder="Enter Your Referral Code"
+              placeholder="Enter Your Referral Wallet Address"
               value={copiedText}
               inputcolor="#000"
               onChange={(e) => setCopiedText(e.target.value)}
@@ -297,7 +297,7 @@ export default function ReferralProgram({
                   return showAlert("Please Enter Your Referral Code");
                 }
                 if (!isAddress(copiedText)) {
-                  return showAlert("Please enter valid referral code");
+                  return showAlert("Please Enter Valid Referral Code");
                 }
                 handleClose();
               }}
@@ -341,7 +341,15 @@ export default function ReferralProgram({
                         color: "#fff",
                         cursor: "pointer",
                       }}
-                      onClick={handleCopy}
+                      
+                      onClick={() => {
+                        if (!account) {
+                          return showAlert("Please Connect Your Wallet");
+                        }else{
+                          handleCopy()
+                        }
+                      
+                      }}
                     >
                       Share
                     </Box>

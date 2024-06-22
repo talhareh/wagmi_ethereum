@@ -166,24 +166,24 @@ function PresaleBox() {
       dec = +dec?.toString();
       const userData = await presaleReadFunction("users", [account]);
       setuserPurchasedTokens(
-        parseFloat(formatUnits(userData[8]?.toString(), dec))?.toFixed(0)
+        parseFloat(formatUnits(userData[9]?.toString(), dec))?.toFixed(0)
       );
 
-      let usdRewardContract = +formatUnits(userData[2]?.toString(), 18);
+      let usdRewardContract = +formatUnits(userData[3]?.toString(), 18);
       let bnbRewardContract =
-        +formatUnits(userData[3]?.toString(), 18) * +bnbLatestPrice;
+        +formatUnits(userData[4]?.toString(), 18) * +bnbLatestPrice;
       let totalRewardContract = usdRewardContract + bnbRewardContract;
-
-      let usdClaimedRewardContract = +formatUnits(userData[6]?.toString(), 18);
+      let usdClaimedRewardContract = +formatUnits(userData[7]?.toString(), 18);
       let bnbClaimedRewardContract =
-        +formatUnits(userData[7]?.toString(), 18) * +bnbLatestPrice;
+        +formatUnits(userData[8]?.toString(), 18) * +bnbLatestPrice;
       let totalClaimedRewardContract =
         usdClaimedRewardContract + bnbClaimedRewardContract;
 
-      setUserReward(parseFloat(totalRewardContract)?.toFixed(4));
-      setuserClaimableRefTokens(
-        parseFloat(totalRewardContract - totalClaimedRewardContract)?.toFixed(4)
+      setUserReward(
+        parseFloat(totalRewardContract + totalClaimedRewardContract)?.toFixed(2)
       );
+
+      setuserClaimableRefTokens(parseFloat(totalRewardContract)?.toFixed(2));
     } catch (e) {
       console.log(e);
     }
@@ -848,7 +848,7 @@ function PresaleBox() {
               cursor: "pointer",
             }}
           >
-            Claim your tokens
+            Claim Your BTCFANS
           </Typography>
         </Box>
         <Box mt={{ xs: 1, sm: 2 }}>
@@ -872,7 +872,7 @@ function PresaleBox() {
             }}
             onClick={account ? () => buyHandler() : async () => await open()}
           >
-            {account ? "Buy $BTCFANS" : "Connect Wallet"}
+            {account ? "Buy BTCFANS" : "Connect Wallet"}
           </Button>
         </Box>
       </Box>

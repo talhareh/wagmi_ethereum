@@ -65,7 +65,7 @@ export default function ClaimTokens({
               fontWeight: 600,
             }}
           >
-            Claim Your Tokens
+            Claim Your BTCFANS
           </Typography>
           <CloseIcon
             onClick={handleClose}
