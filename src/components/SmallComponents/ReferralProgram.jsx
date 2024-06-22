@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { useContext, useState } from "react";
+import { useContext, useState, useCallback } from "react";
 import {
   Dialog,
   DialogContent,
@@ -11,10 +11,12 @@ import {
   Stack,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
+
 import { Dollar } from "./Images";
 import { StyledInputTwo, ToastNotify } from "./AppComponents";
 import { AppContext } from "../../utils/utils";
 import { isAddress } from "viem";
+import { presaleReadFunction } from "../../ConnectivityAssets/hooks";
 
 const modalStyle = {
   "& .MuiDialog-root": {
@@ -47,9 +49,10 @@ export default function ReferralProgram({
   userClaimableTokens,
   userTotalReward,
   claimTokensFunction,
+  setShowAff
 }) {
   const { account } = useContext(AppContext);
-
+  const [showRemove, setShowRemove]= useState(false)
   const [alertState, setAlertState] = useState({
     open: false,
     message: "",
@@ -78,14 +81,27 @@ export default function ReferralProgram({
     }
   };
 
-  // const handlePaste = async () => {
-  //   try {
-  //     const text = await navigator.clipboard.readText();
-  //     setCopiedText(text);
-  //   } catch (err) {
-  //     console.error("Failed to read clipboard contents: ", err);
-  //   }
-  // };
+  const clearReferral = () => {
+    setCopiedText('');
+    setShowAff(false)
+    setShowRemove(false);
+  };
+
+  const checkRefCode = useCallback(async () => {    
+    try {
+        const userData = await presaleReadFunction("users", [copiedText]);
+        if (userData[10]) {
+            showAlert("Referral Code Accepted", "success");
+            setShowAff(true);
+            setShowRemove(true)
+        } else {
+            showAlert("Referral Code is Not Eligible");
+        }
+    } catch (e) {
+        showAlert("Something Went Wrong. Please Contact Support")
+        console.log(e);
+    }
+  }, [copiedText, setShowAff]);
 
   return (
     <Dialog
@@ -129,10 +145,9 @@ export default function ReferralProgram({
               fontSize: "14px",
             }}
           >
-            Earn 2.5% for referring others, 5% for being referred, and an additional
-             1% for second-level referrals. To activate, a minimum purchase of $20 worth 
-             of BTCFANS Tokens is required. Rewards are given in the same currency 
-             used for the purchase.
+            Earn 2.5% for referring others, 5% for being referred. To activate the referral code, 
+            a minimum purchase of $20 worth of BTCFANS Tokens is required. Rewards are given in the 
+            same currency (BNB/USDT) used for the purchase.
           </Typography>
         </Box>
         <Grid container mt={1.5}>
@@ -252,58 +267,79 @@ export default function ReferralProgram({
         <Box my={1.75}>
           <hr />
         </Box>
-        <Box>
-          <Typography
-            sx={{
-              fontFamily: "ProductSansRegular",
-              textTransform: "uppercase",
-              color: "#365acb",
-              fontSize: "12px",
-              fontWeight: 600,
-              mb: 0.5,
-            }}
-          >
-           Referral Code
-          </Typography>
-          <Stack width="100%">
-            <StyledInputTwo
-              type="text"
-              bgColor={"#fff"}
-              placeholder="Enter Your Referral Wallet Address"
-              value={copiedText}
-              inputcolor="#000"
-              onChange={(e) => setCopiedText(e.target.value)}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end" sx={{ padding: 0 }}>
-                    <Box
-                      sx={{
-                        fontFamily: "ProductSansRegular",
-                        backgroundColor: "#F8922A",
-                        py: 0.75,
-                        px: 3,
-                        borderRadius: "50px",
-                        color: "#fff",
-                        cursor: "pointer",
-                      }}
-                    >
-                      Apply
-                    </Box>
-                  </InputAdornment>
-                ),
-              }}
-              onClick={() => {
-                if (!copiedText) {
-                  return showAlert("Please Enter Your Referral Code");
-                }
-                if (!isAddress(copiedText)) {
-                  return showAlert("Please Enter Valid Referral Code");
-                }
-                handleClose();
-              }}
-            />
-          </Stack>
-        </Box>
+
+      <Box>  
+      <Typography
+        sx={{
+          fontFamily: 'ProductSansRegular',
+          textTransform: 'uppercase',
+          color: '#365acb',
+          fontSize: '12px',
+          fontWeight: 600,
+          mb: 0.5,
+        }}
+      >
+        Enter Your Referral Code
+      </Typography>
+      <Stack width="100%">
+        <StyledInputTwo
+          type="text"
+          placeholder="Enter Your Referral Code"
+          value={copiedText}
+          inputcolor="#000"
+          onChange={(e) => setCopiedText(e.target.value)}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end" sx={{ padding: 0.1 }}>
+                {!showRemove ? (
+                  <Box
+                    sx={{
+                      fontFamily: 'ProductSansRegular',
+                      backgroundColor: '#F8922A',
+                      py: 0.75,
+                      px: 3,
+                      borderRadius: '50px',
+                      color: '#fff',
+                      cursor: 'pointer',
+                    }}
+                    onClick={() => {
+                      if (!account) {
+                        return showAlert('Please Connect Your Wallet');
+                      }
+                      if (!copiedText) {
+                        return showAlert('Please Enter Your Referral Code');
+                      }
+                      if (!isAddress(copiedText)) {
+                        return showAlert('Please Enter Valid Referral Code');
+                      }
+                      checkRefCode();
+                      // handleClose();
+                    }}
+                  >
+                    Apply
+                  </Box>
+                ) : (
+                  <Box
+                    sx={{
+                      fontFamily: 'ProductSansRegular',
+                      backgroundColor: '#F8922A',
+                      py: 0.75,
+                      px: 3,
+                      borderRadius: '50px',
+                      color: '#fff',
+                      cursor: 'pointer',
+                    }}
+                    onClick={clearReferral}
+                  >
+                    Remove
+                  </Box>
+                )}
+              </InputAdornment>
+            ),
+          }}
+        />
+      </Stack>
+    </Box>
         <Box my={1.75}>
           <hr />
         </Box>

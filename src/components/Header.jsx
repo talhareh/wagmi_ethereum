@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable no-unused-vars*/
 import  { useContext, useState } from "react";
 import {
   Container,
@@ -12,12 +14,12 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import InstagramIcon from "@mui/icons-material/Instagram";
-import TelegramIcon from "@mui/icons-material/Telegram"; // Correctly import TelegramIcon
+import TelegramIcon from "@mui/icons-material/Telegram"; 
 import XIcon from '@mui/icons-material/X';
 import { Link } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
-import { logo } from "./SmallComponents/Images"; // Ensure the logo is correctly imported
-import { StyledText } from "./SmallComponents/AppComponents"; // Ensure these components are correctly imported
+import { logo } from "./SmallComponents/Images"; 
+import { StyledText } from "./SmallComponents/AppComponents"; 
 import { ExampleButton } from "./SmallComponents/StyledWalletButton";
 import { AppContext } from "../utils/utils";
 import './Header.css'
@@ -163,7 +165,7 @@ export default function Header() {
                   paddingLeft:1.4
               }}
             >
-              <Link to="/" style={{ textDecoration: "none" }}>
+              <Link to="https://bitcoinfansclub.com/" style={{ textDecoration: "none" }}>
                 <Box
                   className="fade-down1"
                   component="img"
@@ -173,41 +175,41 @@ export default function Header() {
                 />
               </Link>
 
-              {!matches2 && (
-                <Stack flexDirection="row" alignItems="center" gap={8} className="fade-down2">
-                  {navArray.map(({ text, link }, i) =>
-                    text.toLowerCase() !== "whitepaper" ? (
-                      <HashLink
-                        smooth
-                        key={i + 4}
-                        to={link}
-                        style={{ textDecoration: "none" }}
-                      >
-                        <StyledText>{text}</StyledText>
-                      </HashLink>
-                    ) : (
-                      <a
-                        key={i + 4}
-                        href={link}
-                        target="_blank"
-                        rel="noreferrer"
-                        style={{ textDecoration: "none" }}
-                      >
-                        <StyledText>{text}</StyledText>
-                      </a>
-                    )
-                  )}
-                  {account?.toLowerCase() === adminAddress?.toLowerCase() && (
-                    <HashLink
-                      smooth
-                      to={"/admin"}
-                      style={{ textDecoration: "none" }}
-                    >
-                      <StyledText>Admin</StyledText>
-                    </HashLink>
-                  )}
-                </Stack>
-              )}
+              {/* {!matches2 && (
+                // <Stack flexDirection="row" alignItems="center" gap={8} className="fade-down2">
+                //   {navArray.map(({ text, link }, i) =>
+                //     text.toLowerCase() !== "whitepaper" ? (
+                //       <HashLink
+                //         smooth
+                //         key={i + 4}
+                //         to={link}
+                //         style={{ textDecoration: "none" }}
+                //       >
+                //         <StyledText>{text}</StyledText>
+                //       </HashLink>
+                //     ) : (
+                //       <a
+                //         key={i + 4}
+                //         href={link}
+                //         target="_blank"
+                //         rel="noreferrer"
+                //         style={{ textDecoration: "none" }}
+                //       >
+                //         <StyledText>{text}</StyledText>
+                //       </a>
+                //     )
+                //   )}
+                //   {account?.toLowerCase() === adminAddress?.toLowerCase() && (
+                //     <HashLink
+                //       smooth
+                //       to={"/admin"}
+                //       style={{ textDecoration: "none" }}
+                //     >
+                //       <StyledText>Admin</StyledText>
+                //     </HashLink>
+                //   )}
+                // </Stack>
+              )} */}
             </Box>
             <Box
               display="flex"
@@ -285,7 +287,7 @@ export default function Header() {
                         }}
                       />
                     </IconButton>
-                    {dropdownMenu}
+                    {/* {dropdownMenu} */}
                   </Stack>
                 </>
               )}

@@ -100,6 +100,7 @@ export const StyledInput = ({ color, borderColor, ...props }) => {
   return (
     <TextField
       {...props}
+      autoComplete="off"
       sx={{
         background: "#fff",
         borderRadius: "60px",
@@ -125,13 +126,13 @@ export const StyledInput = ({ color, borderColor, ...props }) => {
             opacity: 1,
           },
           color: `${color}`,
-          paddingTop: { xs: "10px", sm: "16px" },
-          paddingBottom: { xs: "10px", sm: "16px" },
-
+          paddingTop: { xs: "10px", sm: "10px" },
+          paddingBottom: { xs: "10px", sm: "10px" },
+          marginLeft:{xs: "-3px",sm:"-5px"},
           fontSize: { xs: "11px", sm: "15px" },
           fontWeight: "600",
           fontFamily: "ProductSansRegular",
-          lineHeight: { xs: "28px", sm: "32px" },
+          lineHeight: { xs: "28px", sm: "12px" },
         },
       }}
     />
@@ -142,6 +143,7 @@ export const StyledInputTwo = ({ inputcolor, bgColor, ...props }) => {
   return (
     <TextField
       {...props}
+      autoComplete='off'
       sx={{
         background: bgColor,
         borderRadius: "50px",

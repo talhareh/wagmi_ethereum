@@ -9,6 +9,8 @@ import {
   Stack,
   Typography,
   useMediaQuery,
+  IconButton,
+  Tooltip
 } from "@mui/material";
 import { Token, Dollar, Elon, Usdt, Bnb } from "./Images";
 import { StyledInput, ToastNotify, toLocalFormat } from "./AppComponents";
@@ -26,13 +28,14 @@ import {
 } from "../../ConnectivityAssets/hooks";
 import { formatUnits, isAddress, parseUnits } from "viem";
 import { presaleAddress } from "../../ConnectivityAssets/environment";
+import affliate from '../../assets/affliate.png'
 import "../Header.css"
 
 function PresaleBox() {
   const { account } = useContext(AppContext);
   const { open } = useWeb3Modal();
   const mobileMatches = useMediaQuery("(max-width:390px)");
-
+  const [showAff, setShowAff] = useState(false)
   const [openReferralProgram, setOpenReferralProgram] = useState(false);
   const [openClaimTokens, setOpenClaimTokens] = useState(false);
   const [progressBar, setProgressBar] = useState(40);
@@ -54,7 +57,7 @@ function PresaleBox() {
   const [userReward, setUserReward] = useState(0);
   const [callFunction, setCallFunction] = useState(true);
   const [copiedText, setCopiedText] = useState("");
-
+  const [integerPart, decimalPart] = [0,0];
   const [alertState, setAlertState] = useState({
     open: false,
     message: "",
@@ -180,8 +183,9 @@ function PresaleBox() {
         usdClaimedRewardContract + bnbClaimedRewardContract;
 
       setUserReward(
-        parseFloat(totalRewardContract + totalClaimedRewardContract)?.toFixed(2)
+        parseFloat(totalRewardContract + totalClaimedRewardContract)?.toFixed(4)
       );
+      const [integerPart, decimalPart] = userReward.toString().split('.');
 
       setuserClaimableRefTokens(parseFloat(totalRewardContract)?.toFixed(2));
     } catch (e) {
@@ -285,7 +289,8 @@ function PresaleBox() {
     }
   };
 
-  return (
+  return ( 
+  
     <>
       <ToastNotify alertState={alertState} setAlertState={setAlertState} />
       <Loading loading={loading} />
@@ -312,9 +317,9 @@ function PresaleBox() {
               fontSize: { xs: "18px", sm: "24px" },
             }}
           >
-            BUY $BTCFANS TOKENS
+            BUY BTCFANS TOKENS
           </Typography>
-          <Box className="pulsate"
+          <Box
             sx={{
               display: "flex",
               alignItems: "center",
@@ -322,7 +327,25 @@ function PresaleBox() {
               borderRadius: "20px",
               backgroundColor: "#F8922A",
               px: 1.5,
-              py: 0.4,
+              py: 0.2,
+              animation: 'pulsate 1.8s infinite ease-in-out', 
+                  '@keyframes pulsate': { 
+                    '0%': {
+                      transform: 'scale(1)',
+                      opacity: 1,
+                      boxShadow: '0 0 3px #F8922A',
+                    },
+                    '50%': {
+                      transform: 'scale(1.05)',
+                      opacity: 0.9,
+                      boxShadow: '0 0 10px #F8922A',
+                    },
+                    '100%': {
+                      transform: 'scale(1)',
+                      opacity: 1,
+                      boxShadow: '0 0 3px #F8922A',
+                    },
+                  },
             }}
           >
             <Box
@@ -334,18 +357,18 @@ function PresaleBox() {
                 mr: 0.5,
               }}
             />
-            <Box
-              
-              sx={{
-                color: "#fff",
-                fontFamily: "ProductSansRegular",
-                fontSize: "12px",
-                
-              }}
-              
-            >
-              {preSaleEndedStatus ? "End" : "Live"}
-            </Box>
+
+              <Box
+                className="pulsate"
+                sx={{
+                  color: "#fff",
+                  fontFamily: "ProductSansRegular",
+                  fontSize: "12px",
+                }}
+              >
+                {preSaleEndedStatus ? "End" : "Live"}
+              </Box>
+            
           </Box>
         </Box>
         <Box mt={{ xs: 0.5, sm: 1 }}>
@@ -389,7 +412,7 @@ function PresaleBox() {
                   fontFamily: "ProductSansRegular",
                 }}
               >
-                {parseFloat(progressBarForAll)?.toFixed(3)}%
+                {parseFloat(progressBarForAll)?.toFixed(0)}%
               </Typography>
             </Stack>
           </Stack>
@@ -410,9 +433,9 @@ function PresaleBox() {
                 fontFamily: "ProductSansRegular",
               }}
             >
-              1 x $BTCFANS = $
+              1 x BTCFANS = $
               {+tokenPrice > 0
-                ? parseFloat(1 / +tokenPrice).toFixed(6)
+                ? parseFloat(1 / +tokenPrice).toFixed(7)
                 : "0.00"}
             </Typography>
           </Box>
@@ -433,7 +456,7 @@ function PresaleBox() {
                 fontFamily: "ProductSansRegular",
               }}
             >
-              LISTING PRICE = $0.00003
+              LISTING PRICE = $0.000030
             </Typography>
           </Box>
         </Box>
@@ -462,7 +485,7 @@ function PresaleBox() {
                   textTransform: "uppercase",
                 }}
               >
-                Tokens Sold
+                Token Sold
               </Typography>
               <Box
                 sx={{
@@ -473,7 +496,7 @@ function PresaleBox() {
               >
                 <Box
                   component="img"
-                  mr={0.6}
+                  mr={0.5}
                   src={Token}
                   alt=""
                   sx={{
@@ -483,7 +506,7 @@ function PresaleBox() {
                 <Typography
                   sx={{
                     fontFamily: "ProductSansRegular",
-                    fontSize: { sx: "15px", sm: "24px" },
+                    fontSize: { xs: "15px", sm: "20px" },
                     color: "#fff",
                     wordBreak: "break-all",
                   }}
@@ -524,14 +547,14 @@ function PresaleBox() {
                   src={Dollar}
                   alt=""
                   sx={{
-                    width: { xs: "18px", sm: "22px" },
-                    
+                    width: {xs:"18px",sm:"22px"},
+                    marginLeft:"-1px"
                   }}
                 />
                 <Typography
                   sx={{
                     fontFamily: "ProductSansRegular",
-                    fontSize: { sx: "15px", sm: "24px" },
+                    fontSize: { xs: "15px", sm: "20px" },
                     color: "#fff",
                     wordBreak: "break-all",
                   }}
@@ -553,10 +576,10 @@ function PresaleBox() {
           >
             <Box
               sx={{
+                marginLeft:{xs:"12px", sm:"15px"},
                 height: { xs: "1px", sm: "1.5px" },
                 background: "#fff",
                 flexGrow: 1,
-                
               }}
             />
 
@@ -569,7 +592,7 @@ function PresaleBox() {
                 color: "#ffff",
                 mx: 2,
                 fontFamily: "ProductSansRegular",
-                
+                letterSpacing:1.2
               }}
             >
               {account ? "BUY NOW" : "CONNECT WALLET"}
@@ -577,6 +600,7 @@ function PresaleBox() {
 
             <Box
               sx={{
+                marginRight:{xs:"12px", sm:"15px"},                
                 height: { xs: "1px", sm: "1.5px" },
                 flexGrow: 1,
                 background: "#fff",
@@ -596,7 +620,9 @@ function PresaleBox() {
           >
             <Grid item xs={6} sm={6} pr={{ xs: 1 }}>
               <Box
+                onClick={handleClickOpenPopup}
                 sx={{
+                  cursor:"pointer",
                   backgroundColor: "#889de1",
                   borderRadius: "10px",
                   p: { xs: 1, sm: 2 },
@@ -631,7 +657,7 @@ function PresaleBox() {
                   <Typography
                     sx={{
                       fontFamily: "ProductSansRegular",
-                      fontSize: { sx: "15px", sm: "24px" },
+                      fontSize: { xs: "15px", sm: "20px" },
                       color: "#fff",
                     }}
                   >
@@ -642,7 +668,10 @@ function PresaleBox() {
             </Grid>
             <Grid item xs={6} sm={6} pl={{ xs: 1 }}>
               <Box
+                onClick={handleClickOpen}
+
                 sx={{
+                  cursor:"pointer",
                   backgroundColor: "#889de1",
                   borderRadius: "10px",
                   p: { xs: 1, sm: 2 },
@@ -656,7 +685,7 @@ function PresaleBox() {
                     textTransform: "uppercase",
                   }}
                 >
-                  Reward Earned
+                  Rewards Earned
                 </Typography>
                 <Box
                   sx={{
@@ -671,29 +700,40 @@ function PresaleBox() {
                     src={Dollar}
                     alt=""
                     sx={{
-                      width: {xs:'18px', sm:'22px'},
+                      width: {xs:"18px", sm:"22px"},
+                      marginLeft:"-2px"
                     }}
                   />
                   <Typography
                     sx={{
                       fontFamily: "ProductSansRegular",
-                      fontSize: { sx: "15px", sm: "24px" },
+                      fontSize: { xs: "15px", sm: "20px" },
                       color: "#fff",
                     }}
-                  >
-                    {Math.trunc(userReward)}
+                  >{integerPart}
+                  <Typography
+                        component="span"
+                        sx={{
+                          fontSize: { xs: "8px", sm: "12px" }, 
+                        }}
+                      >
+                        .{decimalPart}
+                      </Typography>
+                    
                   </Typography>
+                  
                 </Box>
               </Box>
             </Grid>
           </Grid>
         )}
+        {/* start of buy buttons */}
 
         <Box mt={{ xs: 1.5, sm: 2 }}>
           <Stack
             my={{ xs: 0.5, sm: 1 }}
             sx={{
-              mx: 0,
+              
               borderRadius: "12px",
               flexDirection: "row",
               background: "transparent",
@@ -704,7 +744,7 @@ function PresaleBox() {
               sx={{
                 flexDirection: "row",
                 width: "100%",
-                gap: "16px",
+                gap: "12px",
               }}
             >
               {[
@@ -727,10 +767,10 @@ function PresaleBox() {
                     alignItems: "center",
                     gap: 1,
                     width: "50%",
-                    py: { xs: 1, sm: 1.6 },
+                    py: { xs: 1, sm: 1.4 },
                     boxShadow: buyWith === text ? "#EA1D24" : "none",
                     fontFamily: "ProductSansRegular",
-                    border: buyWith === text ? "2px solid #F8922A" : "none",
+                    border: buyWith === text ? "2px solid #F8922A" : "2px solid #fff",
                     borderRadius: "60px",
                     background: buyWith === text ? "#fff" : "#fff",
                   }}
@@ -740,16 +780,17 @@ function PresaleBox() {
                     alt=""
                     src={img}
                     width={{ xs: "18px", sm: "22px" }}
-                    ml={2}
+                    ml={{sm:'14px', xs: "10px"}}
                   />
                   <Typography
                     variant="subtitle2"
                     sx={{
                       color: "#000",
-                      fontSize: { xs: "10px", sm: "13px" },
-                      fontWeight: "700",
+                      fontSize: { xs: "11px", sm: "12px" },
+                      fontWeight: "600",
                       fontFamily: "ProductSansRegular",
-                      letterSpacing:0.7,
+                      letterSpacing:1.1,
+                      marginLeft:"-3px"
                     }}
                   >
                     {`BUY WITH ${text}`}
@@ -759,6 +800,11 @@ function PresaleBox() {
             </Stack>
           </Stack>
         </Box>
+        
+        
+
+         {/* second row  box */}
+  
         <Box mt={{ xs: 1, sm: 2 }}>
           <Stack
             sx={{
@@ -767,11 +813,15 @@ function PresaleBox() {
               my: { xs: 1, sm: 2 },
             }}
           >
-            <Box sx={{ width: "100%" }}>
+            <Box sx={{ width: "100%"}}>
               <StyledInput
                 type="text"
                 placeholder="Enter Amount"
-                color="rgba(0,0,0,0.5)"
+                color="#000"
+                borderColor='#FFF'
+                sx={{
+                  marginRight:"12px"
+                }}
                 
                 InputProps={{
                   startAdornment: (
@@ -782,7 +832,7 @@ function PresaleBox() {
                         src={buyWith === "BNB" ? Bnb : Usdt}
                         sx={{
                           width: { xs: "18px", sm: "22px" },
-                          marginLeft: "-6px",
+                          marginLeft: {xs: "-10px",  sm:"-8px"},
                           marginRight: { xs: "8px", sm: "10px" },
                         }}
                       />
@@ -793,14 +843,20 @@ function PresaleBox() {
                 onChange={handleInputChange}
               />
             </Box>
-            <Box sx={{ width: "100%" }}>
+            
+            <Box 
+            sx={{ 
+              width: "100%",
+              marginRight:"4px"
+              }}>
               <StyledInput
-                type="number"
-                placeholder="0.00"
-                color="rgba(0,0,0,0.5)"
+                type="text"
+                placeholder="or Enter Here"
+                color="#000"
+                borderColor='#FFF'
                 value={amount > 0 ? recivedTokens : "0"}
                 InputProps={{
-                  readOnly: true,
+                  
                   startAdornment: (
                     <InputAdornment position="end">
                       <Box
@@ -809,7 +865,7 @@ function PresaleBox() {
                         src={Token}
                         sx={{
                           width: { xs: "18px", sm: "22px" },
-                          marginLeft: "-6px",
+                          marginLeft: {xs:"-11px",sm:"-7px"},
                           marginRight: { xs: "8px", sm: "10px" },
                         }}
                       />
@@ -820,6 +876,11 @@ function PresaleBox() {
             </Box>
           </Stack>
         </Box>
+
+
+
+{/* 
+         Referral and claims */}
         <Box
           sx={{
             display: "flex",
@@ -829,29 +890,36 @@ function PresaleBox() {
           }}
         >
           <Typography
-            onClick={handleClickOpen}
-            sx={{
-              fontSize: { xs: "12px", sm: "14px" },
-              fontFamily: "ProductSansRegular",
-              color: "#fff",
-              cursor: "pointer",
-            }}
-          >
-            View Referral Program
-          </Typography>
-          <Typography
             onClick={handleClickOpenPopup}
             sx={{
               fontSize: { xs: "12px", sm: "14px" },
               fontFamily: "ProductSansRegular",
               color: "#fff",
               cursor: "pointer",
+              marginLeft:"15px"
             }}
           >
-            Claim Your BTCFANS
+            Claim your BTCFANS
           </Typography>
+          <Typography
+            onClick={handleClickOpen}
+            sx={{
+              fontSize: { xs: "12px", sm: "14px" },
+              fontFamily: "ProductSansRegular",
+              color: "#fff",
+              cursor: "pointer",
+              marginRight:"15px"
+            }}
+          >
+            View Referral Program
+          </Typography>
+          
         </Box>
-        <Box mt={{ xs: 1, sm: 2 }}>
+        
+        <Box 
+          mt={{ xs: 1, sm: 2 }}
+          sx={{ position: 'relative', display: 'inline-flex', width: '100%' }}
+        >
           <Button
             sx={{
               fontFamily: "ProductSansRegular",
@@ -862,18 +930,43 @@ function PresaleBox() {
               textTransform: "uppercase",
               borderRadius: "50px",
               py: 1,
-              transition: "transform 0.4s ease-out",
+              
               "&:hover": {
-                  
-                  color: "#fff",
-                  backgroundColor:"#F8922A",
-                  transform: "scale(1.05)",
-                }
+                color: "#fff",
+                backgroundColor: "#F8922A",
+              },
             }}
             onClick={account ? () => buyHandler() : async () => await open()}
           >
             {account ? "Buy BTCFANS" : "Connect Wallet"}
           </Button>
+          {showAff && (
+            <Tooltip 
+              title="Referral Code has been applied" 
+              arrow
+              sx= {{backgroundColor:'red'}}
+            >
+              <IconButton
+                sx={{
+                  position: 'absolute',
+                  right: '12px',
+                  top: '50%',
+                  transform: 'translateY(-50%)',
+                  px: 1, 
+                  borderRadius: '50px',
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'right', 
+                }}
+                
+              >
+                <img
+                  src={affliate} 
+                  alt="App"
+                />
+              </IconButton>
+          </Tooltip>
+        )}
         </Box>
       </Box>
       <ReferralProgram
@@ -884,6 +977,7 @@ function PresaleBox() {
         userClaimableTokens={userClaimableRefTokens}
         userTotalReward={userReward}
         claimTokensFunction={claimRefHandler}
+        setShowAff =  {setShowAff}
       />
       <ClaimTokens
         open={openClaimTokens}

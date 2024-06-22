@@ -12,6 +12,8 @@ import Header from "../components/Header";
 import { Elon } from "../components/SmallComponents/Images";
 import PresaleBox from "../components/SmallComponents/PresaleBox";
 import "../components/Header.css"
+import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
+import DescriptionIcon from '@mui/icons-material/Description';
 
 
 
@@ -24,6 +26,9 @@ function HeroSection() {
     window.open('./whitepaper.pdf', '_blank');
   };
 
+  const openAudit = () => {
+    window.open('./auditreport.pdf', '_blank');
+  };
   return (
     <>
       <Header />
@@ -114,9 +119,6 @@ function HeroSection() {
                   zIndex: 3,
                 }}
               >
-                
-                 
-                
                  Engage with the revolution and connect with a community of passionate <br/>Bitcoin enthusiasts. 
               </Typography>
               <Box
@@ -131,10 +133,12 @@ function HeroSection() {
                 }}
               >
                 <Button
+                  onClick= {openAudit}
+                  startIcon={<VerifiedUserIcon />}
                   sx={{
                     textTransform: "capitalize",
-                    py: { xs: 0.3, sm: 1 },
-                    px: { xs: mobileMatches ? 0.5 : 1.5, sm: 3 },
+                    py: { xs: 0.5, sm: 1 },
+                    px: { xs: mobileMatches ? 0.5 : 1.5, sm: 2 },
                     fontSize: {
                       xs: mobileMatches ? "9px" : "12px",
                       sm: "16px",
@@ -142,6 +146,7 @@ function HeroSection() {
                     fontFamily: "ProductSansRegular",
                     color: "#fff",
                     backgroundColor: "#365ACB",
+                    borderRadius:"50px",
                     mr: 1,
                     
                     "&:hover": {
@@ -153,10 +158,11 @@ function HeroSection() {
                 </Button>
                 <Button
                   onClick= {openPDF}
+                  startIcon={<DescriptionIcon/>}
                   sx={{
                     textTransform: "capitalize",
-                    py: { xs: 0.3, sm: 1 },
-                    px: { xs: mobileMatches ? 0.5 : 1.5, sm: 3 },
+                    py: { xs: 0.5, sm: 1 },
+                    px: { xs: mobileMatches ? 0.5 : 1.5, sm: 2 },
                     fontSize: {
                       xs: mobileMatches ? "9px" : "12px",
                       sm: "16px",
@@ -167,6 +173,7 @@ function HeroSection() {
                     "&:hover": {
                       backgroundColor: "#F8922A",
                     },
+                    borderRadius:"50px"
                   }}
                 >
                   Whitepaper
