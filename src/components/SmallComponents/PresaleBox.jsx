@@ -38,7 +38,7 @@ function PresaleBox() {
   const [showAff, setShowAff] = useState(false)
   const [openReferralProgram, setOpenReferralProgram] = useState(false);
   const [openClaimTokens, setOpenClaimTokens] = useState(false);
-  const [progressBar, setProgressBar] = useState(40);
+  const [progressBar, setProgressBar] = useState(0);
   const [buyWith, setBuyWith] = useState("BNB");
   const [loading, setLoading] = useState(false);
   const [amount, setAmount] = useState("");
@@ -123,11 +123,12 @@ function PresaleBox() {
         ).toFixed(0);
       }
       setamountRaisedForAll(
-        toLocalFormat(+parseFloat(totalRaisedAmount)?.toFixed(0))
+        toLocalFormat(+parseFloat(totalRaisedAmount)?.toFixed(2))
       );
       setTotalSoldTokens(toLocalFormat(+totalTokeSoldContract));
       // let progForAll = (+totalTokeSoldContract / 99612258802) * 100;
       let progForAll = (+totalTokeSoldContract / +toSellAmount) * 100;
+      console.log("progres",progForAll)
       setprogressBarForAll(+progForAll);
       const preSaleStatusContract = await presaleReadFunction("isPresaleEnded");
       setPresaleEndedStatus(preSaleStatusContract);
@@ -169,7 +170,7 @@ function PresaleBox() {
       dec = +dec?.toString();
       const userData = await presaleReadFunction("users", [account]);
       setuserPurchasedTokens(
-        parseFloat(formatUnits(userData[9]?.toString(), dec))?.toFixed(0)
+        parseFloat(formatUnits(userData[9]?.toString(), dec))?.toFixed(2)
       );
 
       let usdRewardContract = +formatUnits(userData[3]?.toString(), 18);
@@ -183,7 +184,7 @@ function PresaleBox() {
         usdClaimedRewardContract + bnbClaimedRewardContract;
 
       setUserReward(
-        parseFloat(totalRewardContract + totalClaimedRewardContract)?.toFixed(3)
+        parseFloat(totalRewardContract + totalClaimedRewardContract)?.toFixed(2)
       );
       
 
@@ -290,6 +291,11 @@ function PresaleBox() {
   };
 
   const [integerPart, decimalPart] = userReward.toString().split('.');
+  const [integerPart1, decimalPart1] = amountRaisedForAll.toString().split('.');
+  const [integerPart2, decimalPart3] = userPurchasedTokens.toString().split('.');
+
+  //console.log({'usd raised': intergerPart})
+  
   return ( 
   
     <>
@@ -297,11 +303,12 @@ function PresaleBox() {
       <Loading loading={loading} />
       <Box
         sx={{
-          backgroundColor: "#365acb",
+          backgroundColor: {xs:'#365acb', sm:"#365acb6f"},
           mr: "auto",
           borderRadius: "20px",
           px: mobileMatches ? 1.5 : 3,
           py: mobileMatches ? 2.5 : 4,
+          opacity:{xs:1, sm :1}
         }}
       >
         <Box
@@ -320,7 +327,9 @@ function PresaleBox() {
           >
             BUY BTCFANS TOKENS
           </Typography>
+          
           <Box
+            className="pulsate"
             sx={{
               display: "flex",
               alignItems: "center",
@@ -329,25 +338,9 @@ function PresaleBox() {
               backgroundColor: "#F8922A",
               px: 1.5,
               py: 0.2,
-              animation: 'pulsate 1.8s infinite ease-in-out', 
-                  '@keyframes pulsate': { 
-                    '0%': {
-                      transform: 'scale(1)',
-                      opacity: 1,
-                      
-                    },
-                    '50%': {
-                      transform: 'scale(1.05)',
-                      opacity: 1,
-                      boxShadow: '0 0 1px #F8922A',
-                      
-                    },
-                    '100%': {
-                      transform: 'scale(1)',
-                      opacity: 1,
-                      
-                    },
-                  },
+              position:"relative",
+              zIndex:1,
+              
             }}
           >
             
@@ -362,14 +355,13 @@ function PresaleBox() {
             />
 
               <Box
-                className="pulsate"
                 sx={{
                   color: "#fff",
                   fontFamily: "ProductSansRegular",
                   fontSize: "12px",
                 }}
               >
-                {preSaleEndedStatus ? "End" : "Live"}
+                {preSaleEndedStatus ? "Completed" : "Live"}
               </Box>
             
           </Box>
@@ -415,7 +407,7 @@ function PresaleBox() {
                   fontFamily: "ProductSansRegular",
                 }}
               >
-                {parseFloat(progressBarForAll)?.toFixed(0)}%
+                {  parseFloat(progressBarForAll)?.toFixed(0)*0.7465}%
               </Typography>
             </Stack>
           </Stack>
@@ -509,7 +501,7 @@ function PresaleBox() {
                 <Typography
                   sx={{
                     fontFamily: "ProductSansRegular",
-                    fontSize: { xs: "15px", sm: "20px" },
+                    fontSize: { xs: "15px", sm: "18px" },
                     color: "#fff",
                     wordBreak: "break-all",
                   }}
@@ -562,7 +554,7 @@ function PresaleBox() {
                     wordBreak: "break-all",
                   }}
                 >
-                  {amountRaisedForAll}
+                  {Math.trunc(amountRaisedForAll)}
                 </Typography>
               </Box>
             </Box>
@@ -664,7 +656,7 @@ function PresaleBox() {
                       color: "#fff",
                     }}
                   >
-                    {toLocalFormat(userPurchasedTokens)}
+                    {Math.trunc(toLocalFormat(userPurchasedTokens))}
                   </Typography>
                 </Box>
               </Box>
@@ -713,15 +705,8 @@ function PresaleBox() {
                       fontSize: { xs: "15px", sm: "20px" },
                       color: "#fff",
                     }}
-                  >{integerPart}
-                  <Typography
-                        component="span"
-                        sx={{
-                          fontSize: { xs: "8px", sm: "12px" }, 
-                        }}
-                      >
-                        .{decimalPart}
-                      </Typography>
+                  >{Math.trunc(userReward)}
+                  
                     
                   </Typography>
                   
@@ -947,7 +932,7 @@ function PresaleBox() {
             <Tooltip 
               title="Referral Code has been applied" 
               arrow
-              sx= {{backgroundColor:'red'}}
+              sx= {{}}
             >
               <IconButton
                 sx={{

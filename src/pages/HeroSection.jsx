@@ -14,6 +14,7 @@ import PresaleBox from "../components/SmallComponents/PresaleBox";
 import "../components/Header.css"
 import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
 import DescriptionIcon from '@mui/icons-material/Description';
+import './hero.css'
 
 
 
@@ -23,15 +24,17 @@ function HeroSection() {
   const matches1 = useMediaQuery("(max-width:700px)");
 
   const openPDF = () => {
-    window.open('./whitepaper.pdf', '_blank');
+    window.open('https://bitcoinfansclub.com/assets/btcfans_whitepaper.pdf', '_blank');
   };
 
   const openAudit = () => {
-    window.open('./auditreport.pdf', '_blank');
+    window.open('https://bitcoinfansclub.com/assets/btcfans-auditreport.pdf', '_blank');
   };
   return (
     <>
       <Header />
+
+      
       <Box 
         component="section" 
         maxWidth={"100%"} 
@@ -40,17 +43,22 @@ function HeroSection() {
           margin: { xs: "5px 0 0 0", sm: "0px 60px 0px 55px", md: "0px 60px 0px 55px", lg: "0px 60px 0px 55px" },
         }}
         >
+        
         <Container 
           maxWidth="xl" 
           sx={{ 
                 px: { xs: 1, md: 3 },
+                
                  
             }}>
+          <div className= "mainHero">
           <Grid
             container
             sx={{ 
-                backgroundColor: "#023FBA", borderRadius: "25px" }}
+              backgroundColor: {xs:"#023FBA", sm :'#023FBA00'},
+              borderRadius: "25px", opacity: {xs:1, sm:1} }}
           >
+            
             <Grid
               item
               xs={12}
@@ -198,8 +206,11 @@ function HeroSection() {
               <PresaleBox />
             </Grid>
           </Grid>
+          </div>  
         </Container>
+        
       </Box>
+      
     </>
   );
 }

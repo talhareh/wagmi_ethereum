@@ -2,7 +2,8 @@
 import { useWeb3Modal } from "@web3modal/wagmi/react";
 import { useContext } from "react";
 import { AppContext } from "../../utils/utils";
-import { Button } from "@mui/material";
+import { Button,  Tooltip} from "@mui/material";
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 export const ExampleButton = ({ width , fontSize, letterSpacing, paddingLeft,paddingRight}) => {
   const { account } = useContext(AppContext);
@@ -11,8 +12,8 @@ export const ExampleButton = ({ width , fontSize, letterSpacing, paddingLeft,pad
   return (
     <Button
       sx={{
-        color: "#fff",
-        backgroundColor: "#F8922A",
+        color: "#F8922A",
+        //backgroundColor: account ? "#F8922A" : "#939392",
         textTransform: "capitalize",
         fontFamily: "ProductSansRegular",
         fontWeight: 600,
@@ -26,17 +27,38 @@ export const ExampleButton = ({ width , fontSize, letterSpacing, paddingLeft,pad
         fontSize: fontSize,
         transition: "transform 0.4s ease-out",
         "&:hover": {
-          opacity: 0.8,
-          color: "#fff",
-          backgroundColor: "#0A3FBA",
+          opacity: 1,
+          color: "#0A3FBA",
+          //backgroundColor: "#0A3FBA",
           transform: "scale(1.05)",
         },
       }}
+      
       onClick={async () => await open()}
     >
       {account
-        ? account.slice(0, 4) + "..." + account.slice(-4)
-        : "Connect Wallet"}
+        ? <AccountCircleIcon 
+        sx={{
+          fontSize:{xs:"38px", sm:"48px"}, 
+          color:'#F8922A',
+          
+
+          }} 
+      />
+        : <Tooltip 
+        title="Connect Wallet" 
+        arrow
+        
+      > 
+          <AccountCircleIcon 
+              sx={{
+                fontSize:{xs:"38px"}, 
+                color:'#939392',
+                marginRight:{xs:"-20px"}
+              }} 
+            />
+            </Tooltip>
+      }
     </Button>
   );
 };

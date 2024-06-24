@@ -1,0 +1,8 @@
+
+
+.mainHero{
+
+    background: url('../assets/hero_background.webp') no-repeat center center scroll;
+    background-size: cover;
+    border-radius: 25px;
+}

@@ -15,17 +15,17 @@
     0%{
         transform:scale(1);
         opacity:1;
-        box-shadow: 0 0 10px #F8922A;
+        box-shadow: 0 0 5px #F8922A;
     }
     50%{
         transform:scale(1.1);
         opacity:0.9;
-        box-shadow: 0 0 20px #F8922A;
+        box-shadow: 0 0 10px #F8922A;
     }
     100%{
         transform:scale(1);
         opacity:1;
-        box-shadow: 0 0 10px #F8922A;
+        box-shadow: 0 0 5px #F8922A;
     }
 }
 
@@ -45,4 +45,48 @@
 }
 .fade-down4{
     animation:fallFromAbove 1250ms ease-out;
+}
+
+
+.pulse {
+    position: relative;
+    display: inline-block;
+    z-index: 1; /* Ensure the button is above the pseudo-element */
+}
+
+.pulse::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: inherit;
+    border-radius: inherit;
+    opacity: 0.8;
+    animation: pulseAnimate 4s ease-out infinite;
+    z-index: -1; /* Ensure the pulse effect is behind the button */
+}
+
+@keyframes pulseAnimate {
+    0% {
+        opacity: 0.8;
+        transform: scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(1.07,1.3);
+    }
+}
+
+.btn-presale {
+    padding: 10px 20px;
+    background-color: #f8922a; /* Orange color */
+    color: white;
+    border: none;
+    border-radius: 25px; /* Rounded corners */
+    text-transform: uppercase;
+    font-weight: bold;
+    position: relative;
+    z-index: 10; /* Ensure the button is above the pulse effect */
 }

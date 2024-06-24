@@ -24,6 +24,7 @@ import { ExampleButton } from "./SmallComponents/StyledWalletButton";
 import { AppContext } from "../utils/utils";
 import './Header.css'
 
+
 const navArray = [
   {
     text: "Home",
@@ -46,7 +47,7 @@ const socialArray = [
   },
   {
     icon: <TelegramIcon sx={{ fontSize: "18px" }} />,
-    link: "https://t.me/bitcoinfansclubofficial",
+    link: "https://t.me/bitcoinfansclub",
   },
 ];
 
@@ -100,7 +101,10 @@ export default function Header() {
                 <Box
                   className="fade-down1"
                   component="img"
-                  width={{ xs: "110px", sm: "120px" }}
+                  width={{ xs: "130px", sm: "150px" }}
+                  sx={{
+                    marginTop:"-5px"
+                  }}
                   src={logo}
                   alt="Logo"
                 />
@@ -146,11 +150,11 @@ export default function Header() {
                       </IconButton>
                     ))}
                   </Box>
-                  <ExampleButton width={"190px"} fontSize={"16px"} letterSpacing={'2px'}/>
+                  <ExampleButton paddingRight/>
                 </Stack>
               ) : (
                 <>
-                  <Stack flexDirection="row" gap={1} alignItems="center">
+                  <Stack flexDirection="row" gap={1} alignItems="center" >
                     <Box>
                       {socialArray.map(({ icon, link }, i) => (
                         <IconButton
@@ -175,11 +179,8 @@ export default function Header() {
                     </Box>
                     
                     <ExampleButton 
-                        width={"100px"}
-                        fontSize={"13px"}
-                        letterSpacing={'0px'}
-                        paddingLeft={'1px'}
-                        paddingRight= {'1px'}
+                        width={"10px"}
+                        
                     />
                     
                   </Stack>
