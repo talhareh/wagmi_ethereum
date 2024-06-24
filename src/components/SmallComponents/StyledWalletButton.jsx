@@ -4,7 +4,7 @@ import { useContext } from "react";
 import { AppContext } from "../../utils/utils";
 import { Button } from "@mui/material";
 
-export const ExampleButton = ({ width }) => {
+export const ExampleButton = ({ width , fontSize, letterSpacing, paddingLeft,paddingRight}) => {
   const { account } = useContext(AppContext);
   const { open } = useWeb3Modal();
 
@@ -16,12 +16,14 @@ export const ExampleButton = ({ width }) => {
         textTransform: "capitalize",
         fontFamily: "ProductSansRegular",
         fontWeight: 600,
-        letterSpacing: "2px",
+        letterSpacing: letterSpacing,
         borderRadius: "10px",
         width: width,
-         
+        paddingLeft:paddingLeft,
+        paddingRight:paddingRight,
         py: 1.3,
-        fontSize: "16px",
+        
+        fontSize: fontSize,
         transition: "transform 0.4s ease-out",
         "&:hover": {
           opacity: 0.8,

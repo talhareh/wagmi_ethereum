@@ -65,75 +65,6 @@ export default function Header() {
     setAnchorEl(null);
   };
 
-  const dropdownMenu = (
-    <Menu
-      anchorEl={anchorEl}
-      open={Boolean(anchorEl)}
-      onClose={handleMenuClose}
-      sx={{
-        backgroundColor: '#fff',
-        borderRadius: '15px',
-        padding: '20px',
-        boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)',
-        '& .MuiMenuItem-root': {
-          fontSize: '16px',
-          fontWeight: 'bold',
-          color: '#000',
-          '&:hover': {
-            backgroundColor: 'transparent',
-          },
-        },
-      }}
-      MenuListProps={{
-        sx: {
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '10px',
-        },
-      }}
-    >
-      {navArray.map(({ text, link }, index) => (
-        <MenuItem key={index + 3} onClick={handleMenuClose} sx={{ padding: '10px 20px' }}>
-          {text.toLowerCase() !== "whitepaper" ? (
-            <HashLink
-              smooth
-              to={link}
-              style={{ textDecoration: "none", color: "#000" }}
-            >
-              <ListItemText primary={text} />
-            </HashLink>
-          ) : (
-            <a
-              href={link}
-              target="_blank"
-              rel="noreferrer"
-              style={{
-                textDecoration: "none",
-                color: "#fff",
-                backgroundColor: '#ff7f3f',
-                borderRadius: '10px',
-                padding: '10px 20px',
-                display: 'inline-block'
-              }}
-            >
-              <ListItemText primary={text} />
-            </a>
-          )}
-        </MenuItem>
-      ))}
-      {account?.toLowerCase() === adminAddress?.toLowerCase() && (
-        <MenuItem onClick={handleMenuClose} sx={{ padding: '10px 20px' }}>
-          <HashLink
-            smooth
-            to={"/admin"}
-            style={{ textDecoration: "none", color: "#000" }}
-          >
-            <ListItemText primary={"Admin"} />
-          </HashLink>
-        </MenuItem>
-      )}
-    </Menu>
-  );
 
   return (
     <>
@@ -174,42 +105,6 @@ export default function Header() {
                   alt="Logo"
                 />
               </Link>
-
-              {/* {!matches2 && (
-                // <Stack flexDirection="row" alignItems="center" gap={8} className="fade-down2">
-                //   {navArray.map(({ text, link }, i) =>
-                //     text.toLowerCase() !== "whitepaper" ? (
-                //       <HashLink
-                //         smooth
-                //         key={i + 4}
-                //         to={link}
-                //         style={{ textDecoration: "none" }}
-                //       >
-                //         <StyledText>{text}</StyledText>
-                //       </HashLink>
-                //     ) : (
-                //       <a
-                //         key={i + 4}
-                //         href={link}
-                //         target="_blank"
-                //         rel="noreferrer"
-                //         style={{ textDecoration: "none" }}
-                //       >
-                //         <StyledText>{text}</StyledText>
-                //       </a>
-                //     )
-                //   )}
-                //   {account?.toLowerCase() === adminAddress?.toLowerCase() && (
-                //     <HashLink
-                //       smooth
-                //       to={"/admin"}
-                //       style={{ textDecoration: "none" }}
-                //     >
-                //       <StyledText>Admin</StyledText>
-                //     </HashLink>
-                //   )}
-                // </Stack>
-              )} */}
             </Box>
             <Box
               display="flex"
@@ -251,7 +146,7 @@ export default function Header() {
                       </IconButton>
                     ))}
                   </Box>
-                  <ExampleButton width={"190px"} />
+                  <ExampleButton width={"190px"} fontSize={"16px"} letterSpacing={'2px'}/>
                 </Stack>
               ) : (
                 <>
@@ -278,16 +173,15 @@ export default function Header() {
                         </IconButton>
                       ))}
                     </Box>
-                    <IconButton onClick={handleMenuOpen}>
-                      <MenuIcon
-                        style={{
-                          fontSize: "30px",
-                          cursor: "pointer",
-                          color: "#000",
-                        }}
-                      />
-                    </IconButton>
-                    {/* {dropdownMenu} */}
+                    
+                    <ExampleButton 
+                        width={"100px"}
+                        fontSize={"13px"}
+                        letterSpacing={'0px'}
+                        paddingLeft={'1px'}
+                        paddingRight= {'1px'}
+                    />
+                    
                   </Stack>
                 </>
               )}

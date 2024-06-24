@@ -134,7 +134,9 @@ function HeroSection() {
               >
                 <Button
                   onClick= {openAudit}
-                  startIcon={<VerifiedUserIcon />}
+                  startIcon={<VerifiedUserIcon
+                                
+                              />}
                   sx={{
                     textTransform: "capitalize",
                     py: { xs: 0.5, sm: 1 },

@@ -233,7 +233,7 @@ export default function ReferralProgram({
                     wordBreak: "break-all",
                   }}
                 >
-                  {userTotalReward}
+                  {Math.trunc(userTotalReward*100)/100}
                 </Typography>
               </Box>
             </Box>

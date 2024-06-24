@@ -57,7 +57,7 @@ function PresaleBox() {
   const [userReward, setUserReward] = useState(0);
   const [callFunction, setCallFunction] = useState(true);
   const [copiedText, setCopiedText] = useState("");
-  const [integerPart, decimalPart] = [0,0];
+  
   const [alertState, setAlertState] = useState({
     open: false,
     message: "",
@@ -183,9 +183,9 @@ function PresaleBox() {
         usdClaimedRewardContract + bnbClaimedRewardContract;
 
       setUserReward(
-        parseFloat(totalRewardContract + totalClaimedRewardContract)?.toFixed(4)
+        parseFloat(totalRewardContract + totalClaimedRewardContract)?.toFixed(3)
       );
-      const [integerPart, decimalPart] = userReward.toString().split('.');
+      
 
       setuserClaimableRefTokens(parseFloat(totalRewardContract)?.toFixed(2));
     } catch (e) {
@@ -289,6 +289,7 @@ function PresaleBox() {
     }
   };
 
+  const [integerPart, decimalPart] = userReward.toString().split('.');
   return ( 
   
     <>
@@ -333,21 +334,23 @@ function PresaleBox() {
                     '0%': {
                       transform: 'scale(1)',
                       opacity: 1,
-                      boxShadow: '0 0 3px #F8922A',
+                      
                     },
                     '50%': {
                       transform: 'scale(1.05)',
-                      opacity: 0.9,
-                      boxShadow: '0 0 10px #F8922A',
+                      opacity: 1,
+                      boxShadow: '0 0 1px #F8922A',
+                      
                     },
                     '100%': {
                       transform: 'scale(1)',
                       opacity: 1,
-                      boxShadow: '0 0 3px #F8922A',
+                      
                     },
                   },
             }}
           >
+            
             <Box
               sx={{
                 backgroundColor: preSaleEndedStatus ? "#ff0000" : "#22ee71",
