@@ -28,6 +28,7 @@ import {
 } from "../../ConnectivityAssets/hooks";
 import { formatUnits, isAddress, parseUnits } from "viem";
 import { presaleAddress } from "../../ConnectivityAssets/environment";
+import Skeleton from '@mui/material/Skeleton';
 import affliate from '../../assets/affliate.png'
 import "../Header.css"
 
@@ -57,6 +58,9 @@ function PresaleBox() {
   const [userReward, setUserReward] = useState(0);
   const [callFunction, setCallFunction] = useState(true);
   const [copiedText, setCopiedText] = useState("");
+  const [fullRaised, setFullRaised] = useState(false)
+  const [fullGains, setFullGains]= useState(false)
+  const [priceFetched, setPriceFetched] = useState(false)
   
   const [alertState, setAlertState] = useState({
     open: false,
@@ -105,6 +109,7 @@ function PresaleBox() {
       ]);
       // setEndTime(+presaleData[1]?.toString());
       settokenPrice(+formatUnits(presaleData[0]?.toString(), dec));
+      setPriceFetched(true)
 
       let totalRaisedAmount = await presaleReadFunction("amountRaisedOverAll");
       totalRaisedAmount = +formatUnits(totalRaisedAmount?.toString(), 18);
@@ -125,7 +130,9 @@ function PresaleBox() {
       setamountRaisedForAll(
         toLocalFormat(+parseFloat(totalRaisedAmount)?.toFixed(2))
       );
+      setFullRaised(true)
       setTotalSoldTokens(toLocalFormat(+totalTokeSoldContract));
+      setFullGains(true)
       // let progForAll = (+totalTokeSoldContract / 99612258802) * 100;
       let progForAll = (+totalTokeSoldContract / +toSellAmount) * 100;
       console.log("progres",progForAll)
@@ -289,12 +296,6 @@ function PresaleBox() {
       });
     }
   };
-
-  const [integerPart, decimalPart] = userReward.toString().split('.');
-  const [integerPart1, decimalPart1] = amountRaisedForAll.toString().split('.');
-  const [integerPart2, decimalPart3] = userPurchasedTokens.toString().split('.');
-
-  //console.log({'usd raised': intergerPart})
   
   return ( 
   
@@ -428,10 +429,18 @@ function PresaleBox() {
                 fontFamily: "ProductSansRegular",
               }}
             >
-              1 x BTCFANS = $
-              {+tokenPrice > 0
-                ? parseFloat(1 / +tokenPrice).toFixed(7)
-                : "0.00"}
+              ROUND 1 PRICE  
+              <Box component="span" sx={{ display: 'inline-flex', alignItems: 'center', ml: 1 }}>
+                  {!priceFetched? 
+                  (<Skeleton animation="wave" height={10} width={50} />)
+                    :
+                  (<span className="spacer"> $
+                  {+tokenPrice > 0
+                    ? parseFloat(1 / +tokenPrice).toFixed(7)
+                    : "0.00"}
+                    </span>)
+                  }
+              </Box>
             </Typography>
           </Box>
           <Box
@@ -451,7 +460,7 @@ function PresaleBox() {
                 fontFamily: "ProductSansRegular",
               }}
             >
-              LISTING PRICE = $0.000030
+              LISTING PRICE  <span className="spacer"> $0.000030</span>
             </Typography>
           </Box>
         </Box>
@@ -498,7 +507,10 @@ function PresaleBox() {
                     width: { xs: "18px", sm: "22px" },
                   }}
                 />
-                <Typography
+                {!fullGains?(
+                  <Skeleton animation="wave" width={90} height ={30} />
+                )
+                :(<Typography
                   sx={{
                     fontFamily: "ProductSansRegular",
                     fontSize: { xs: "15px", sm: "18px" },
@@ -507,7 +519,7 @@ function PresaleBox() {
                   }}
                 >
                   {totalSoldTokens}
-                </Typography>
+                </Typography>)}
               </Box>
             </Box>
           </Grid>
@@ -546,16 +558,27 @@ function PresaleBox() {
                     marginLeft:"-1px"
                   }}
                 />
-                <Typography
-                  sx={{
-                    fontFamily: "ProductSansRegular",
-                    fontSize: { xs: "15px", sm: "20px" },
-                    color: "#fff",
-                    wordBreak: "break-all",
-                  }}
-                >
-                  {Math.trunc(amountRaisedForAll)}
-                </Typography>
+
+                {!fullRaised ?
+                  (
+                    
+                    <Skeleton animation="wave" width={100} height={30} />
+
+                  )
+                  :
+                  (
+                  <Typography
+                    sx={{
+                      fontFamily: "ProductSansRegular",
+                      fontSize: { xs: "15px", sm: "20px" },
+                      color: "#fff",
+                      wordBreak: "break-all",
+                    }}
+                  >
+                    {Math.trunc(amountRaisedForAll)}
+                  </Typography>
+                  )
+                }
               </Box>
             </Box>
           </Grid>
