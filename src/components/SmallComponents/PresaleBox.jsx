@@ -575,7 +575,7 @@ function PresaleBox() {
                       wordBreak: "break-all",
                     }}
                   >
-                    {Math.trunc(amountRaisedForAll)}
+                    {amountRaisedForAll}
                   </Typography>
                   )
                 }
@@ -679,7 +679,7 @@ function PresaleBox() {
                       color: "#fff",
                     }}
                   >
-                    {Math.trunc(toLocalFormat(userPurchasedTokens))}
+                    {toLocalFormat(userPurchasedTokens)}
                   </Typography>
                 </Box>
               </Box>
