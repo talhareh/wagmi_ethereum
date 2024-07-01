@@ -33,7 +33,7 @@ import affliate from '../../assets/affliate.png'
 import "../Header.css"
 
 function PresaleBox() {
-  const { account } = useContext(AppContext);
+  const { account, usdRaisedg, soldTok } = useContext(AppContext);
   const { open } = useWeb3Modal();
   const mobileMatches = useMediaQuery("(max-width:390px)");
   const [showAff, setShowAff] = useState(false)
@@ -127,8 +127,9 @@ function PresaleBox() {
           +formatUnits(presaleData[1]?.toString(), dec)
         ).toFixed(0);
       }
+      let totRaised = toLocalFormat(+parseFloat(totalRaisedAmount)?.toFixed(2)) + usdRaisedg
       setamountRaisedForAll(
-        toLocalFormat(+parseFloat(totalRaisedAmount)?.toFixed(2))
+        totRaised
       );
       setFullRaised(true)
       setTotalSoldTokens(toLocalFormat(+totalTokeSoldContract));
