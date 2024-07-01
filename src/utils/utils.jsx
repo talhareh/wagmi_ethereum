@@ -17,6 +17,9 @@ export const ConectivityProvider = ({ children }) => {
 
   const [state, setState] = useState(initialState);
   const [adminAddress, setAdminAddress] = useState("");
+  const [usdRaisedg, setUsdRaisedg] = useState(0)
+  const [soldTok, setSoldTok] = useState("")
+  const [progIncr, setProgIncr] = useState("")
 
   useEffect(() => {
     setState({
@@ -32,6 +35,9 @@ export const ConectivityProvider = ({ children }) => {
         chainId: chain?.id,
         adminAddress,
         setAdminAddress,
+        usdRaisedg, setUsdRaisedg,
+        soldTok, setSoldTok,
+        progIncr, setProgIncr
       }}
     >
       {children}

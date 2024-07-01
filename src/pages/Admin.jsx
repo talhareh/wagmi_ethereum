@@ -1,6 +1,6 @@
 import { Box, Button, Container, Grid, Stack } from "@mui/material";
-import React, { useContext, useState } from "react";
-import Header from "../components/Header";
+import { useContext, useState } from "react";
+// import Header from "../components/Header";
 import PresaleStatus from "../components/SmallComponents/PresaleStatus";
 import Loading from "../components/SmallComponents/loading";
 import { ToastNotify } from "../components/SmallComponents/AppComponents";
@@ -8,6 +8,7 @@ import { presaleWriteFunction } from "../ConnectivityAssets/hooks";
 import { AppContext } from "../utils/utils";
 import PresaleStage from "../components/SmallComponents/PresaleStage";
 import IncUSDRaised from "../components/SmallComponents/IncUSDRaised";
+import AddTokensSold from "../components/SmallComponents/AddTokensSold";
 
 const gridItemStyle = {
   display: "flex",
@@ -32,7 +33,10 @@ const btnStyle = {
   },
 };
 function Admin() {
-  const { account } = useContext(AppContext);
+  const { account,  setUsdRaisedg, 
+          soldTok, setSoldTok, progIncr, setProIncr       
+        }
+   = useContext(AppContext);
   const [openPresaleStage, setOpenPresaleStage] = useState(false);
   const [presaleStage, setPresaleStage] = useState("");
   const [openPresaleStatus, setOpenPresaleStatus] = useState(false);
@@ -40,6 +44,8 @@ function Admin() {
   const [openUsd, setOpenUsd] = useState(false)
   const [usdRaised, setUsdRaised] = useState(0)
   const [openSoldTok, setOpenSoldTok] = useState(false)
+
+  const [openProg, setOpenProg] = useState(false)
   
   const [loading, setLoading] = useState(false);
   const [alertState, setAlertState] = useState({
@@ -121,13 +127,12 @@ function Admin() {
 
   const USDHandler = () =>{
     console.log('Setting usd raised $$$' , usdRaised)
-
-    setTimeout(() =>{
-      setOpenUsd(false)
-    }, 4000)
+    setUsdRaisedg(usdRaised)
   }
 
-
+  const soldTokHandler =() => {
+    console.log("tok handler", soldTok)
+  }
 
   return (
     <Box>
@@ -150,12 +155,14 @@ function Admin() {
       />
 
       <AddTokensSold
-        open={openUsd}
-        setOpen = {setOpenUsd}
-        usdRaised={usdRaised}
-        setUsdRaised={setUsdRaised}
-        USDHandler= {USDHandler}
+        open={openSoldTok}
+        setOpen = {setOpenSoldTok}
+        soldToken={soldTok}
+        setSoldToken={setSoldTok}
+        soldTokHandler= {soldTokHandler}
       />
+
+      
 
       <PresaleStage
         open={openPresaleStage}
@@ -207,7 +214,7 @@ function Admin() {
               </Button>
             </Grid>
             <Grid item xs={12} sm={6} md={4} sx={gridItemStyle}>
-              <Button sx={btnStyle} onClick={endPresaleStatusHandler}>
+              <Button sx={btnStyle} onClick={() =>setOpenSoldTok(true)}>
                 Add Tokens Sold
               </Button>
             </Grid>
