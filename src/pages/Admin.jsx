@@ -7,6 +7,7 @@ import { ToastNotify } from "../components/SmallComponents/AppComponents";
 import { presaleWriteFunction } from "../ConnectivityAssets/hooks";
 import { AppContext } from "../utils/utils";
 import PresaleStage from "../components/SmallComponents/PresaleStage";
+import IncUSDRaised from "../components/SmallComponents/IncUSDRaised";
 
 const gridItemStyle = {
   display: "flex",
@@ -35,6 +36,7 @@ function Admin() {
   const [openPresaleStage, setOpenPresaleStage] = useState(false);
   const [presaleStage, setPresaleStage] = useState("");
   const [openPresaleStatus, setOpenPresaleStatus] = useState(false);
+  const [usdRaised,setOpenUSDRaised] = useState(false)
   const [presaleStatus, setPresaleStatus] = useState("");
   const [loading, setLoading] = useState(false);
   const [alertState, setAlertState] = useState({
@@ -49,6 +51,7 @@ function Admin() {
       severity,
     });
   };
+
   const presaleStatusHandler = async () => {
     try {
       if (!account) {
@@ -74,6 +77,7 @@ function Admin() {
       showAlert(e?.shortMessage, "error");
     }
   };
+
   const endPresaleStatusHandler = async () => {
     try {
       if (!account) {
@@ -89,6 +93,7 @@ function Admin() {
       showAlert(e?.shortMessage, "error");
     }
   };
+
   const presaleStageHandler = async () => {
     try {
       if (!account) {
@@ -110,17 +115,40 @@ function Admin() {
       showAlert(e?.shortMessage, "error");
     }
   };
+
+  const USDHandler = ()=>{
+    setOpenUSDRaised(true)
+    setLoading(true)
+    setTimeout(() =>{
+              setOpenUSDRaised(false)  
+              setLoading(false)
+
+            }
+    , 4000)
+
+  }
+
   return (
     <Box>
       <ToastNotify alertState={alertState} setAlertState={setAlertState} />
       <Loading loading={loading} />
+      
       <PresaleStatus
+        open={openPresaleStatus}
+        setOpen={setOpenPresaleStatus}
+        presaleStatus={presaleStatus}
+        setPresaleStatus={setPresaleStatus}
+        USDHandler={USDHandler}
+      />
+      
+      <IncUSDRaised
         open={openPresaleStatus}
         setOpen={setOpenPresaleStatus}
         presaleStatus={presaleStatus}
         setPresaleStatus={setPresaleStatus}
         presaleStatusHandler={presaleStatusHandler}
       />
+
       <PresaleStage
         open={openPresaleStage}
         setOpen={setOpenPresaleStage}
@@ -151,6 +179,33 @@ function Admin() {
             <Grid item xs={12} sm={6} md={4} sx={gridItemStyle}>
               <Button sx={btnStyle} onClick={() => setOpenPresaleStage(true)}>
                 Set Current Stage
+              </Button>
+            </Grid>
+          </Grid>
+        </Stack>
+
+        <Stack
+          sx={{
+            backgroundColor: "#023FBA",
+            my: 3,
+            py: 4,
+            borderRadius: "12px",
+          }}
+        >
+          <Grid container spacing={2} justifyContent={"center"}>
+            <Grid item xs={12} sm={6} md={4} sx={gridItemStyle}>
+              <Button sx={btnStyle} onClick={() => USDHandler()}>
+                Add USD Raised
+              </Button>
+            </Grid>
+            <Grid item xs={12} sm={6} md={4} sx={gridItemStyle}>
+              <Button sx={btnStyle} onClick={endPresaleStatusHandler}>
+                Add Tokens Sold
+              </Button>
+            </Grid>
+            <Grid item xs={12} sm={6} md={4} sx={gridItemStyle}>
+              <Button sx={btnStyle} onClick={() => setOpenPresaleStage(true)}>
+                Increase Progress Bar
               </Button>
             </Grid>
           </Grid>

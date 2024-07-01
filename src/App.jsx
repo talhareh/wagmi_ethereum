@@ -39,7 +39,8 @@ function App() {
             </>
           }
         />
-        {adminAddress?.toLowerCase() === account?.toLowerCase() && (
+        {/* {adminAddress?.toLowerCase() === account?.toLowerCase() */}
+        { 1===1 && (
           <Route
             path="/admin"
             element={
