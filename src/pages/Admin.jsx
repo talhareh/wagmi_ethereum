@@ -36,8 +36,11 @@ function Admin() {
   const [openPresaleStage, setOpenPresaleStage] = useState(false);
   const [presaleStage, setPresaleStage] = useState("");
   const [openPresaleStatus, setOpenPresaleStatus] = useState(false);
-  const [usdRaised,setOpenUSDRaised] = useState(false)
   const [presaleStatus, setPresaleStatus] = useState("");
+  const [openUsd, setOpenUsd] = useState(false)
+  const [usdRaised, setUsdRaised] = useState(0)
+  const [openSoldTok, setOpenSoldTok] = useState(false)
+  
   const [loading, setLoading] = useState(false);
   const [alertState, setAlertState] = useState({
     open: false,
@@ -116,37 +119,42 @@ function Admin() {
     }
   };
 
-  const USDHandler = ()=>{
-    setOpenUSDRaised(true)
-    setLoading(true)
+  const USDHandler = () =>{
+    console.log('Setting usd raised $$$' , usdRaised)
+
     setTimeout(() =>{
-              setOpenUSDRaised(false)  
-              setLoading(false)
-
-            }
-    , 4000)
-
+      setOpenUsd(false)
+    }, 4000)
   }
+
+
 
   return (
     <Box>
       <ToastNotify alertState={alertState} setAlertState={setAlertState} />
       <Loading loading={loading} />
-      
       <PresaleStatus
         open={openPresaleStatus}
         setOpen={setOpenPresaleStatus}
         presaleStatus={presaleStatus}
         setPresaleStatus={setPresaleStatus}
-        USDHandler={USDHandler}
-      />
-      
-      <IncUSDRaised
-        open={openPresaleStatus}
-        setOpen={setOpenPresaleStatus}
-        presaleStatus={presaleStatus}
-        setPresaleStatus={setPresaleStatus}
         presaleStatusHandler={presaleStatusHandler}
+      />
+
+      <IncUSDRaised
+        open={openUsd}
+        setOpen = {setOpenUsd}
+        usdRaised={usdRaised}
+        setUsdRaised={setUsdRaised}
+        USDHandler= {USDHandler}
+      />
+
+      <AddTokensSold
+        open={openUsd}
+        setOpen = {setOpenUsd}
+        usdRaised={usdRaised}
+        setUsdRaised={setUsdRaised}
+        USDHandler= {USDHandler}
       />
 
       <PresaleStage
@@ -194,8 +202,8 @@ function Admin() {
         >
           <Grid container spacing={2} justifyContent={"center"}>
             <Grid item xs={12} sm={6} md={4} sx={gridItemStyle}>
-              <Button sx={btnStyle} onClick={() => USDHandler()}>
-                Add USD Raised
+              <Button sx={btnStyle} onClick={() => setOpenUsd(true)}>
+                Add USD
               </Button>
             </Grid>
             <Grid item xs={12} sm={6} md={4} sx={gridItemStyle}>
