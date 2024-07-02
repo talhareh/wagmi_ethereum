@@ -37,6 +37,25 @@ export const presaleReadFunction = async (functionName, args) => {
   return data;
 };
 
+export const fetchMetrics = async () => {
+  try {
+    const response = await fetch('http://93.127.163.199:5000/metrics');
+    if (!response.ok) {
+      console.log('Not OK res')
+    }
+    const data = await response.json();
+    
+    const decodedMetrics = data.map(row => ({
+      usr_raised: parseFloat(atob(row.usr_raised)),
+      views_taken: parseFloat(atob(row.views_taken)),
+      average: parseFloat(atob(row.average))
+    }));
+    return decodedMetrics
+  } catch (error) {
+    console.error('Error fetching metrics:', error);
+  }
+}
+
 /// write functions
 export const tokenWriteFunction = async (functionName, args) => {
   const { hash } = await writeContract({
