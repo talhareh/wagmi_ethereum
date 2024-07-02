@@ -9,6 +9,9 @@ import { AppContext } from "../utils/utils";
 import PresaleStage from "../components/SmallComponents/PresaleStage";
 import IncUSDRaised from "../components/SmallComponents/IncUSDRaised";
 import AddTokensSold from "../components/SmallComponents/AddTokensSold";
+import axios from 'axios'
+import ProgIncr from "../components/SmallComponents/ProgIncr";
+
 
 const gridItemStyle = {
   display: "flex",
@@ -33,19 +36,18 @@ const btnStyle = {
   },
 };
 function Admin() {
-  const { account,  setUsdRaisedg, 
-          soldTok, setSoldTok, progIncr, setProIncr       
-        }
-   = useContext(AppContext);
+  const { account} = useContext(AppContext);
   const [openPresaleStage, setOpenPresaleStage] = useState(false);
   const [presaleStage, setPresaleStage] = useState("");
   const [openPresaleStatus, setOpenPresaleStatus] = useState(false);
   const [presaleStatus, setPresaleStatus] = useState("");
+  
   const [openUsd, setOpenUsd] = useState(false)
-  const [usdRaised, setUsdRaised] = useState(0)
+  const [usdRaised, setUsdRaised] = useState(null)
   const [openSoldTok, setOpenSoldTok] = useState(false)
-
+  const [soldTok, setSoldTok] = useState(null)
   const [openProg, setOpenProg] = useState(false)
+  const [prog, setProg] = useState(null)
   
   const [loading, setLoading] = useState(false);
   const [alertState, setAlertState] = useState({
@@ -125,14 +127,25 @@ function Admin() {
     }
   };
 
-  const USDHandler = () =>{
-    console.log('Setting usd raised $$$' , usdRaised)
-    setUsdRaisedg(usdRaised)
+  const updateStat = async () =>{
+    const data = {
+      usr_raised:usdRaised || 0,
+      views_taken: soldTok || 0,
+      average: prog || 0
+    };
+
+    try {
+      await axios.post('http://localhost:5000/update', data);
+      setUsdRaised(null)
+      setSoldTok(null)
+      setProg(null)
+      showAlert('Values updated successfully!', 'success');
+    } catch (error) {
+      showAlert('There was an error updating the values!');
+    }
   }
 
-  const soldTokHandler =() => {
-    console.log("tok handler", soldTok)
-  }
+  
 
   return (
     <Box>
@@ -151,7 +164,7 @@ function Admin() {
         setOpen = {setOpenUsd}
         usdRaised={usdRaised}
         setUsdRaised={setUsdRaised}
-        USDHandler= {USDHandler}
+        USDHandler= {updateStat}
       />
 
       <AddTokensSold
@@ -159,9 +172,16 @@ function Admin() {
         setOpen = {setOpenSoldTok}
         soldToken={soldTok}
         setSoldToken={setSoldTok}
-        soldTokHandler= {soldTokHandler}
+        soldTokHandler= {updateStat}
       />
 
+      <ProgIncr
+        open={openProg}
+        setOpen = {setOpenProg}
+        progIncr={prog}
+        setProgIncr={setProg}
+        ProgIncrHandler= {updateStat}
+      />
       
 
       <PresaleStage
@@ -219,7 +239,7 @@ function Admin() {
               </Button>
             </Grid>
             <Grid item xs={12} sm={6} md={4} sx={gridItemStyle}>
-              <Button sx={btnStyle} onClick={() => setOpenPresaleStage(true)}>
+              <Button sx={btnStyle} onClick={() => setOpenProg(true)}>
                 Increase Progress Bar
               </Button>
             </Grid>

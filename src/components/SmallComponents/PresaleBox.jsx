@@ -61,6 +61,7 @@ function PresaleBox() {
   const [fullRaised, setFullRaised] = useState(false)
   const [fullGains, setFullGains]= useState(false)
   const [priceFetched, setPriceFetched] = useState(false)
+  const [metrics, setMetrics] = useState([]);
   
   const [alertState, setAlertState] = useState({
     open: false,
@@ -74,6 +75,7 @@ function PresaleBox() {
       severity,
     });
   };
+  
 
   const handleClickOpen = () => {
     setOpenReferralProgram(true);
@@ -127,7 +129,10 @@ function PresaleBox() {
           +formatUnits(presaleData[1]?.toString(), dec)
         ).toFixed(0);
       }
-      let totRaised = toLocalFormat(+parseFloat(totalRaisedAmount)?.toFixed(2)) + usdRaisedg
+      // let totRaised = parseFloat(totalRaisedAmount)?.toFixed(2); 
+      // console.log('raised', metrics[0]?.usr_raised || 0)
+      // totRaised = parseFloat(totRaised) +metrics[0].usr_raised ; 
+      let totRaised = toLocalFormat(parseFloat(totalRaisedAmount)?.toFixed(2)); 
       setamountRaisedForAll(
         totRaised
       );
@@ -136,7 +141,7 @@ function PresaleBox() {
       setFullGains(true)
       // let progForAll = (+totalTokeSoldContract / 99612258802) * 100;
       let progForAll = (+totalTokeSoldContract / +toSellAmount) * 100;
-      console.log("progres",progForAll)
+      
       setprogressBarForAll(+progForAll);
       const preSaleStatusContract = await presaleReadFunction("isPresaleEnded");
       setPresaleEndedStatus(preSaleStatusContract);
@@ -146,9 +151,39 @@ function PresaleBox() {
     }
   };
   useEffect(() => {
-    initVoidSigner();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [callFunction]);
+    async function fetchMetrics() {
+      try {
+        const response = await fetch('http://localhost:5000/metrics');
+        if (!response.ok) {
+          showAlert('User Metrics not fetched');
+        }
+        const data = await response.json();
+        
+        const decodedMetrics = data.map(row => ({
+          usr_raised: parseInt(atob(row.usr_raised)),
+          views_taken: parseInt(atob(row.views_taken)),
+          average: parseInt(atob(row.average))
+        }));
+        //console.log("dec",decodedMetrics)
+        setMetrics(decodedMetrics);
+        //console.log("dec",decodedMetrics)
+        initVoidSigner();
+      } catch (error) {
+        console.error('Error fetching metrics:', error);
+      }
+    }
+
+    fetchMetrics();
+  }, [callFunction]); 
+
+  // useEffect(() => {
+  //   // console.log('len',metrics.length)
+  //   // if(metrics.length === 0){
+  //   //   setTimeout(()=>{console.log('waiting 1')},1000)
+  //   // }
+  //   //initVoidSigner();
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [callFunction]);
 
   useEffect(() => {
     const calculatorUSDT = async () => {
@@ -253,6 +288,7 @@ function PresaleBox() {
     }
   };
 
+   
   const claimTokensHandler = async () => {
     if (account) {
       try {
