@@ -25,6 +25,7 @@ import {
   tokenReadFunction,
   usdtReadFunction,
   usdtWriteFunction,
+  fetchMetrics
 } from "../../ConnectivityAssets/hooks";
 import { formatUnits, isAddress, parseUnits } from "viem";
 import { presaleAddress } from "../../ConnectivityAssets/environment";
@@ -33,7 +34,8 @@ import affliate from '../../assets/affliate.png'
 import "../Header.css"
 
 function PresaleBox() {
-  const { account, usdRaisedg, soldTok } = useContext(AppContext);
+  const { account, bnbBalance, usdtBalance} = useContext(AppContext);
+  
   const { open } = useWeb3Modal();
   const mobileMatches = useMediaQuery("(max-width:390px)");
   const [showAff, setShowAff] = useState(false)
@@ -61,7 +63,6 @@ function PresaleBox() {
   const [fullRaised, setFullRaised] = useState(false)
   const [fullGains, setFullGains]= useState(false)
   const [priceFetched, setPriceFetched] = useState(false)
-  const [metrics, setMetrics] = useState([]);
   
   const [alertState, setAlertState] = useState({
     open: false,
@@ -113,6 +114,8 @@ function PresaleBox() {
       settokenPrice(+formatUnits(presaleData[0]?.toString(), dec));
       setPriceFetched(true)
 
+      let met = await fetchMetrics();
+
       let totalRaisedAmount = await presaleReadFunction("amountRaisedOverAll");
       totalRaisedAmount = +formatUnits(totalRaisedAmount?.toString(), 18);
 
@@ -129,20 +132,28 @@ function PresaleBox() {
           +formatUnits(presaleData[1]?.toString(), dec)
         ).toFixed(0);
       }
-      // let totRaised = parseFloat(totalRaisedAmount)?.toFixed(2); 
-      // console.log('raised', metrics[0]?.usr_raised || 0)
-      // totRaised = parseFloat(totRaised) +metrics[0].usr_raised ; 
-      let totRaised = toLocalFormat(parseFloat(totalRaisedAmount)?.toFixed(2)); 
+
+      
+      let totRaised = parseFloat(totalRaisedAmount)?.toFixed(2); 
+      totRaised = parseFloat(totRaised) + met[0]?.usr_raised || 0; 
+      totRaised = toLocalFormat(parseFloat(totRaised)?.toFixed(2)); 
       setamountRaisedForAll(
         totRaised
       );
       setFullRaised(true)
-      setTotalSoldTokens(toLocalFormat(+totalTokeSoldContract));
+
+      let totSold = +totalTokeSoldContract + met[0]?.views_taken || 0
+      //console.log('totSold',totSold)
+      setTotalSoldTokens(toLocalFormat(totSold));
       setFullGains(true)
+
       // let progForAll = (+totalTokeSoldContract / 99612258802) * 100;
       let progForAll = (+totalTokeSoldContract / +toSellAmount) * 100;
-      
+      progForAll = progForAll+ met[0]?.average || 0
+      console.log(progForAll.toFixed(2))
       setprogressBarForAll(+progForAll);
+
+
       const preSaleStatusContract = await presaleReadFunction("isPresaleEnded");
       setPresaleEndedStatus(preSaleStatusContract);
       setCallFunction(false);
@@ -150,40 +161,11 @@ function PresaleBox() {
       console.log(error, "ERROR VoidSigner Data");
     }
   };
+  
   useEffect(() => {
-    async function fetchMetrics() {
-      try {
-        const response = await fetch('http://localhost:5000/metrics');
-        if (!response.ok) {
-          showAlert('User Metrics not fetched');
-        }
-        const data = await response.json();
-        
-        const decodedMetrics = data.map(row => ({
-          usr_raised: parseInt(atob(row.usr_raised)),
-          views_taken: parseInt(atob(row.views_taken)),
-          average: parseInt(atob(row.average))
-        }));
-        //console.log("dec",decodedMetrics)
-        setMetrics(decodedMetrics);
-        //console.log("dec",decodedMetrics)
-        initVoidSigner();
-      } catch (error) {
-        console.error('Error fetching metrics:', error);
-      }
-    }
-
-    fetchMetrics();
-  }, [callFunction]); 
-
-  // useEffect(() => {
-  //   // console.log('len',metrics.length)
-  //   // if(metrics.length === 0){
-  //   //   setTimeout(()=>{console.log('waiting 1')},1000)
-  //   // }
-  //   //initVoidSigner();
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [callFunction]);
+    initVoidSigner();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [callFunction]);
 
   useEffect(() => {
     const calculatorUSDT = async () => {
@@ -287,7 +269,6 @@ function PresaleBox() {
       showAlert(error?.shortMessage);
     }
   };
-
    
   const claimTokensHandler = async () => {
     if (account) {
@@ -334,6 +315,9 @@ function PresaleBox() {
     }
   };
   
+  const maxHandler =() =>{
+    console.log({account})
+  }
   return ( 
   
     <>
@@ -445,7 +429,7 @@ function PresaleBox() {
                   fontFamily: "ProductSansRegular",
                 }}
               >
-                {  parseFloat(progressBarForAll)?.toFixed(0)*0.7465}%
+                {  (parseFloat(progressBarForAll)?.toFixed(0)*0.7465).toFixed(2)}%
               </Typography>
             </Stack>
           </Stack>
@@ -467,7 +451,7 @@ function PresaleBox() {
               }}
             >
               ROUND 1 PRICE  
-              <Box component="span" sx={{ display: 'inline-flex', alignItems: 'center', ml: 1 }}>
+              <Box component="span" sx={{ display: 'inline-flex', alignItems: 'center', ml:0.5 }}>
                   {!priceFetched? 
                   (<Skeleton animation="wave" height={10} width={50} />)
                     :
@@ -873,7 +857,7 @@ function PresaleBox() {
                 
                 InputProps={{
                   startAdornment: (
-                    <InputAdornment position="end">
+                    <InputAdornment position="start">
                       <Box
                         component={"img"}
                         alt=""
@@ -886,6 +870,24 @@ function PresaleBox() {
                       />
                     </InputAdornment>
                   ),
+                  // endAdornment: (
+                  //   <InputAdornment position="end">
+                  //     <Typography
+                  //       onClick={maxHandler}
+                  //       sx={{
+                  //         cursor: 'pointer',
+                  //         userSelect: 'none',
+                  //         color:"#F8922A",
+                  //         fontWeight:600,
+                  //         margin:{xs:'5px', sm:"7px"},
+                  //         fontSize:{xs:"10px", sm:"12px"}
+                          
+                  //       }}
+                  //     >
+                  //       MAX
+                  //     </Typography>
+                  //   </InputAdornment>
+                  // ),
                 }}
                 value={amount}
                 onChange={handleInputChange}
