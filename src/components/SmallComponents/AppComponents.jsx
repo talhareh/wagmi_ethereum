@@ -184,3 +184,10 @@ export const StyledInputTwo = ({ inputcolor, bgColor, ...props }) => {
 export const toLocalFormat = (val) => {
   return val?.toString()?.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
+
+export const toLocalFormat1 = (val) => {
+  
+  if( val.includes('.'))
+    {return}
+  return val?.toString()?.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+};

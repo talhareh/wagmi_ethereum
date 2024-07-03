@@ -13,7 +13,7 @@ import {
   Tooltip
 } from "@mui/material";
 import { Token, Dollar, Elon, Usdt, Bnb } from "./Images";
-import { StyledInput, ToastNotify, toLocalFormat } from "./AppComponents";
+import { StyledInput, ToastNotify, toLocalFormat , toLocalFormat1} from "./AppComponents";
 import ReferralProgram from "./ReferralProgram";
 import ClaimTokens from "./ClaimTokens";
 import { useWeb3Modal } from "@web3modal/wagmi/react";
@@ -35,7 +35,7 @@ import "../Header.css"
 
 function PresaleBox() {
   const { account, bnbBalance, usdtBalance} = useContext(AppContext);
-  
+  //console.log(account, ' : ', bnbBalance, ' : ', usdtBalance)
   const { open } = useWeb3Modal();
   const mobileMatches = useMediaQuery("(max-width:390px)");
   const [showAff, setShowAff] = useState(false)
@@ -63,7 +63,8 @@ function PresaleBox() {
   const [fullRaised, setFullRaised] = useState(false)
   const [fullGains, setFullGains]= useState(false)
   const [priceFetched, setPriceFetched] = useState(false)
-  
+  const [formattedAmount, setFormattedAmount] = useState("");
+
   const [alertState, setAlertState] = useState({
     open: false,
     message: "",
@@ -85,9 +86,10 @@ function PresaleBox() {
     setOpenClaimTokens(true);
   };
 
+  
   const handleInputChange = (event) => {
     const input = event.target.value;
-    const newValue = input?.replace(/[^0-9.]/g, "");
+    let newValue = input.replace(/[^0-9.]/g, "");
     setAmount(newValue);
   };
 
@@ -150,7 +152,7 @@ function PresaleBox() {
       // let progForAll = (+totalTokeSoldContract / 99612258802) * 100;
       let progForAll = (+totalTokeSoldContract / +toSellAmount) * 100;
       progForAll = progForAll+ met[0]?.average || 0
-      console.log(progForAll.toFixed(2))
+      //console.log(progForAll.toFixed(2))
       setprogressBarForAll(+progForAll);
 
 
@@ -316,7 +318,21 @@ function PresaleBox() {
   };
   
   const maxHandler =() =>{
-    console.log({account})
+    if(!account){
+      showAlert("Please Connect Wallet")
+      return
+    }
+    else if(buyWith === 'USDT')
+    {
+      setAmount(usdtBalance)
+      return
+    }
+    else
+    {
+      setAmount(bnbBalance)
+      return
+    }
+    
   }
   return ( 
   
@@ -392,7 +408,7 @@ function PresaleBox() {
           <Stack
             sx={{
               height: { xs: "18px", sm: "20px" },
-              background: "#fff",
+              background: "#f7c592",
               mt: 1.2,
               borderRadius: "20px",
               overflow: "hidden",
@@ -870,26 +886,26 @@ function PresaleBox() {
                       />
                     </InputAdornment>
                   ),
-                  // endAdornment: (
-                  //   <InputAdornment position="end">
-                  //     <Typography
-                  //       onClick={maxHandler}
-                  //       sx={{
-                  //         cursor: 'pointer',
-                  //         userSelect: 'none',
-                  //         color:"#F8922A",
-                  //         fontWeight:600,
-                  //         margin:{xs:'5px', sm:"7px"},
-                  //         fontSize:{xs:"10px", sm:"12px"}
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <Typography
+                        onClick={maxHandler}
+                        sx={{
+                          cursor: 'pointer',
+                          userSelect: 'none',
+                          color:"#F8922A",
+                          fontWeight:600,
+                          margin:{xs:'5px', sm:"7px"},
+                          fontSize:{xs:"10px", sm:"12px"}
                           
-                  //       }}
-                  //     >
-                  //       MAX
-                  //     </Typography>
-                  //   </InputAdornment>
-                  // ),
+                        }}
+                      >
+                        MAX
+                      </Typography>
+                    </InputAdornment>
+                  ),
                 }}
-                value={amount}
+                value={toLocalFormat1(amount)}
                 onChange={handleInputChange}
               />
             </Box>
@@ -904,7 +920,7 @@ function PresaleBox() {
                 placeholder="or Enter Here"
                 color="#000"
                 borderColor='#FFF'
-                value={amount > 0 ? recivedTokens : "0"}
+                value={amount > 0 ? toLocalFormat(recivedTokens) : "0"}
                 InputProps={{
                   
                   startAdornment: (
