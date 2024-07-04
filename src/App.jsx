@@ -11,7 +11,7 @@ function App() {
   const [openNetworkSwitch, setOpenNetworkSwitch] = useState(false);
 
   useEffect(() => {
-    if (account && chainId > 0 && chainId !== 56) {
+    if (account && chainId > 0 && (chainId !== 56 && chainId !== 97)) {
       setOpenNetworkSwitch(true);
     }
   }, [chainId, account]);
@@ -20,6 +20,7 @@ function App() {
     (async () => {
       try {
         const ownerAddress = await presaleReadFunction("owner");
+        
         setAdminAddress(ownerAddress);
       } catch (e) {
         console.log(e);
@@ -39,17 +40,18 @@ function App() {
             </>
           }
         />
-        {adminAddress?.toLowerCase() === account?.toLowerCase() && (
-          <Route
-            path="/admin"
-            element={
-              <>
-                <Header />
-                <Admin />
-              </>
-            }
-          />
-        )}
+      {adminAddress?.toLowerCase() === account?.toLowerCase()  && (
+      <Route
+        path="/admin"
+        element={
+          <>
+            <Header />
+            <Admin />
+          </>
+        }
+      />
+    ) 
+  }
       </Routes>
     </>
   );

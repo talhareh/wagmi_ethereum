@@ -136,7 +136,7 @@ function Admin() {
     };
 
     try {
-      await axios.post('http://93.127.163.199:5000/update', data);
+      await axios.post('http://app.bitcoinfansclub.com/update', data);
       setUsdRaised(null)
       setSoldTok(null)
       setProg(null)
