@@ -188,6 +188,6 @@ export const toLocalFormat = (val) => {
 export const toLocalFormat1 = (val) => {
   
   if( val.includes('.'))
-    {return}
+    {return val}
   return val?.toString()?.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };

@@ -39,7 +39,7 @@ export const presaleReadFunction = async (functionName, args) => {
 
 export const fetchMetrics = async () => {
   try {
-    const response = await fetch('http://93.127.163.199:5000/metrics');
+    const response = await fetch('https://app.bitcoinfansclub.com/metrics');
     if (!response.ok) {
       console.log('Not OK res')
     }

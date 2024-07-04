@@ -323,13 +323,14 @@ function PresaleBox() {
       return
     }
     else if(buyWith === 'USDT')
-    {
-      setAmount(usdtBalance)
+    { 
+      setAmount(usdtBalance.slice(0,4))
       return
     }
     else
     {
-      setAmount(bnbBalance)
+      console.log('bnb')
+      setAmount(bnbBalance.slice(0,4))
       return
     }
     
