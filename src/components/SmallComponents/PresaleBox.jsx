@@ -63,7 +63,7 @@ function PresaleBox() {
   const [fullRaised, setFullRaised] = useState(false)
   const [fullGains, setFullGains]= useState(false)
   const [priceFetched, setPriceFetched] = useState(false)
-  const [formattedAmount, setFormattedAmount] = useState("");
+  const [finalProgBar, setFinalProgBar] = useState(0);
 
   const [alertState, setAlertState] = useState({
     open: false,
@@ -151,9 +151,11 @@ function PresaleBox() {
 
       // let progForAll = (+totalTokeSoldContract / 99612258802) * 100;
       let progForAll = (+totalTokeSoldContract / +toSellAmount) * 100;
-      progForAll = progForAll+ met[0]?.average || 0
+      //progForAll = progForAll+ met[0]?.average || 0
       //console.log(progForAll.toFixed(2))
-      setprogressBarForAll(+progForAll);
+      let prog  = parseFloat(progForAll)?.toFixed(0)*0.7465.toFixed(2)
+      prog = prog+ met[0]?.average || 0
+      setprogressBarForAll(prog);
 
 
       const preSaleStatusContract = await presaleReadFunction("isPresaleEnded");
@@ -324,14 +326,31 @@ function PresaleBox() {
     }
     else if(buyWith === 'USDT')
     { 
-      setAmount(usdtBalance.slice(0,4))
-      return
+      if (usdtBalance.includes('.')){
+        let [usd, deca] = usdtBalance.split('.')
+        let decimal = deca.slice(0,2) 
+        let final = `${usd}.${decimal}` 
+        setAmount(final)
+        return
+      }
+        else {
+          setAmount(bnbBalance)
+          return
+        }
     }
     else
-    {
-      console.log('bnb')
-      setAmount(bnbBalance.slice(0,4))
-      return
+    {   
+      if (bnbBalance.includes('.')){
+        let [bnb, deca] = bnbBalance.split('.')
+        let decimal = deca.slice(0,2) 
+        let final = `${bnb}.${decimal}` 
+        setAmount(final)
+        return
+      }
+        else {
+          setAmount(bnbBalance)
+          return
+        }
     }
     
   }
@@ -437,7 +456,7 @@ function PresaleBox() {
                 variant="subtitle2"
                 sx={{
                   color: "#ffff",
-                  fontSize: "0.875rem",
+                  fontSize: "0.9rem",
                   fontWeight: "500",
                   zIndex: 1,
                   pl: 1.2,
@@ -446,7 +465,7 @@ function PresaleBox() {
                   fontFamily: "ProductSansRegular",
                 }}
               >
-                {  (parseFloat(progressBarForAll)?.toFixed(0)*0.7465).toFixed(2)}%
+                {  progressBarForAll}%
               </Typography>
             </Stack>
           </Stack>
@@ -881,7 +900,7 @@ function PresaleBox() {
                         src={buyWith === "BNB" ? Bnb : Usdt}
                         sx={{
                           width: { xs: "18px", sm: "22px" },
-                          marginLeft: {xs: "-10px",  sm:"-8px"},
+                          marginLeft: {xs: "-5px",  sm:"0px"},
                           marginRight: { xs: "8px", sm: "10px" },
                         }}
                       />

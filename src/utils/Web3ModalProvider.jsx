@@ -1,12 +1,12 @@
 /* eslint-disable react/prop-types */
-import { bsc } from "wagmi/chains";
+import { bsc, bscTestnet } from "wagmi/chains";
 import { createWeb3Modal, defaultWagmiConfig } from "@web3modal/wagmi/react";
 import { WagmiConfig } from "wagmi";
 import { ConectivityProvider } from "./utils";
 
 const projectId = "cba73ada547c01c1a64d7725fb732495";
 
-const chains = [bsc];
+const chains = [bsc, bscTestnet];
 
 const wagmiConfig = defaultWagmiConfig({ chains, projectId });
 

@@ -188,6 +188,12 @@ export const toLocalFormat = (val) => {
 export const toLocalFormat1 = (val) => {
   
   if( val.includes('.'))
-    {return val}
+    { 
+      let [integer, decimal]= val.split('.')
+      //console.log(intge)
+      let integ = integer?.toString()?.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      return `${integ}.${decimal}`;
+  
+    }
   return val?.toString()?.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };

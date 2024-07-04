@@ -39,9 +39,10 @@ export const presaleReadFunction = async (functionName, args) => {
 
 export const fetchMetrics = async () => {
   try {
-    const response = await fetch('https://app.bitcoinfansclub.com/metrics');
+    const response = await fetch('http://app.bitcoinfansclub.com/metrics');
     if (!response.ok) {
       console.log('Not OK res')
+      return [{ usr_raised: 0, views_taken: 0, average: 0.000 }];
     }
     const data = await response.json();
     
