@@ -11,6 +11,7 @@ import IncUSDRaised from "../components/SmallComponents/IncUSDRaised";
 import AddTokensSold from "../components/SmallComponents/AddTokensSold";
 import axios from 'axios'
 import ProgIncr from "../components/SmallComponents/ProgIncr";
+import TargetStage from "../components/SmallComponents/TargetStage";
 
 
 const gridItemStyle = {
@@ -48,6 +49,8 @@ function Admin() {
   const [soldTok, setSoldTok] = useState(null)
   const [openProg, setOpenProg] = useState(false)
   const [prog, setProg] = useState(null)
+  const [target, setTarget] = useState(null)
+  const [openTar, setOpenTar] = useState(false)
   const [metrics, setMetrics] = useState({})
   
   const [loading, setLoading] = useState(false);
@@ -132,7 +135,8 @@ function Admin() {
     const data = {
       usr_raised:usdRaised || 0,
       views_taken: soldTok || 0,
-      average: prog || 0
+      average: prog || 0,
+      usr_target: target || 0
     };
 
     try {
@@ -140,6 +144,7 @@ function Admin() {
       setUsdRaised(null)
       setSoldTok(null)
       setProg(null)
+      setTarget(null)
       showAlert('Values updated successfully!', 'success');
     } catch (error) {
       showAlert('There was an error updating the values!');
@@ -190,6 +195,14 @@ function Admin() {
         progIncr={prog}
         setProgIncr={setProg}
         ProgIncrHandler= {updateStat}
+      />
+
+      <TargetStage
+      open= {openTar}
+      setOpen = {setOpenTar}
+      target = {target}
+      setTarget={setTarget}
+      targetHandler={updateStat}
       />
       
 
@@ -257,23 +270,20 @@ function Admin() {
               <Box
                 sx={{
                   display: "flex",
-                  justifyContent: "start",
+                  justifyContent: "center",
                   alignItems: "center",
                 }}
               >
-                
-
-                
-                  <Typography
-                    sx={{
-                      fontFamily: "ProductSansRegular",
-                      fontSize: { xs: "15px", sm: "20px" },
-                      color: "#fff",
-                      wordBreak: "break-all",
-                    }}
-                  >
-                    {metrics.usr_raised}
-                  </Typography>
+                <Typography
+                  sx={{
+                    fontFamily: "ProductSansRegular",
+                    fontSize: { xs: "15px", sm: "20px" },
+                    color: "#fff",
+                    wordBreak: "break-all",
+                  }}
+                >
+                  {metrics.usr_raised}
+                </Typography>
                  
               </Box>
             </Box>
@@ -299,23 +309,20 @@ function Admin() {
               <Box
                 sx={{
                   display: "flex",
-                  justifyContent: "start",
+                  justifyContent: "center",
                   alignItems: "center",
                 }}
               >
-                
-
-                
-                  <Typography
-                    sx={{
-                      fontFamily: "ProductSansRegular",
-                      fontSize: { xs: "15px", sm: "20px" },
-                      color: "#fff",
-                      wordBreak: "break-all",
-                    }}
-                  >
-                    {metrics.views_taken}
-                  </Typography>
+                <Typography
+                  sx={{
+                    fontFamily: "ProductSansRegular",
+                    fontSize: { xs: "15px", sm: "20px" },
+                    color: "#fff",
+                    wordBreak: "break-all",
+                  }}
+                >
+                  {metrics.views_taken}
+                </Typography>
                  
               </Box>
             </Box>
@@ -341,23 +348,59 @@ function Admin() {
               <Box
                 sx={{
                   display: "flex",
-                  justifyContent: "start",
+                  justifyContent: "center",
                   alignItems: "center",
                 }}
               >
-                
+                <Typography
+                  sx={{
+                    fontFamily: "ProductSansRegular",
+                    fontSize: { xs: "15px", sm: "20px" },
+                    color: "#fff",
+                    wordBreak: "break-all",
+                  }}
+                >
+                  {metrics.average}
+                </Typography>
+                 
+              </Box>
+            </Box>
 
-                
-                  <Typography
-                    sx={{
-                      fontFamily: "ProductSansRegular",
-                      fontSize: { xs: "15px", sm: "20px" },
-                      color: "#fff",
-                      wordBreak: "break-all",
-                    }}
-                  >
-                    {metrics.average}
-                  </Typography>
+            <Box
+              sx={{
+                backgroundColor: "#889de1",
+                borderRadius: "10px",
+                p: { xs: 1, sm: 2 },
+                margin:"5px"
+              }}
+            >
+              <Typography
+                sx={{
+                  fontFamily: "ProductSansRegular",
+                  fontSize: { xs: "10px", sm: "12px" },
+                  color: "#fff",
+                  textTransform: "uppercase",
+                }}
+              >
+                Presale Target
+              </Typography>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Typography
+                  sx={{
+                    fontFamily: "ProductSansRegular",
+                    fontSize: { xs: "15px", sm: "20px" },
+                    color: "#fff",
+                    wordBreak: "break-all",
+                  }}
+                >
+                  {metrics.usr_target}
+                </Typography>
                  
               </Box>
             </Box>
@@ -374,19 +417,25 @@ function Admin() {
           }}
         >
           <Grid container spacing={2} justifyContent={"center"}>
-            <Grid item xs={12} sm={6} md={4} sx={gridItemStyle}>
+            <Grid item xs={12} sm={6} md={3} sx={gridItemStyle}>
               <Button sx={btnStyle} onClick={() => setOpenUsd(true)}>
                 Add USD
               </Button>
             </Grid>
-            <Grid item xs={12} sm={6} md={4} sx={gridItemStyle}>
+            <Grid item xs={12} sm={6} md={3} sx={gridItemStyle}>
               <Button sx={btnStyle} onClick={() =>setOpenSoldTok(true)}>
                 Add Tokens Sold
               </Button>
             </Grid>
-            <Grid item xs={12} sm={6} md={4} sx={gridItemStyle}>
+            <Grid item xs={12} sm={6} md={3} sx={gridItemStyle}>
               <Button sx={btnStyle} onClick={() => setOpenProg(true)}>
-                Increase Progress Bar
+                 Progress Bar
+              </Button>
+            </Grid>
+            
+            <Grid item xs={12} sm={6} md={3} sx={gridItemStyle}>
+              <Button sx={btnStyle} onClick={() => setOpenTar(true)}>
+                Set Target
               </Button>
             </Grid>
           </Grid>

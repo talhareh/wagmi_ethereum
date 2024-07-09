@@ -2,8 +2,8 @@
 
 .mainHero{
 
-    /* background: url('../assets/hero_background.webp') no-repeat center center scroll;
-    background-size: cover; */
-    background-color: #0A3FBA;
+    background: url('../assets/hero_background.webp') no-repeat center center scroll;
+    background-size: cover;
+    /* background-color: #0A3FBA; */
     border-radius: 25px;
 }

@@ -326,6 +326,7 @@ function PresaleBox() {
     }
     else if(buyWith === 'USDT')
     { 
+      
       if (usdtBalance.includes('.')){
         let [usd, deca] = usdtBalance.split('.')
         let decimal = deca.slice(0,2) 
@@ -334,12 +335,13 @@ function PresaleBox() {
         return
       }
         else {
-          setAmount(bnbBalance)
+          setAmount(usdtBalance)
           return
         }
     }
     else
     {   
+      
       if (bnbBalance.includes('.')){
         let [bnb, deca] = bnbBalance.split('.')
         let decimal = deca.slice(0,2) 
