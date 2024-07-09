@@ -42,14 +42,15 @@ export const fetchMetrics = async () => {
     const response = await fetch('http://app.bitcoinfansclub.com/metrics');
     if (!response.ok) {
       console.log('Not OK res')
-      return [{ usr_raised: 0, views_taken: 0, average: 0.000 }];
+      return [{ usr_raised: 0, views_taken: 0, average: 0.000, usr_target:0 }];
     }
     const data = await response.json();
     
     const decodedMetrics = data.map(row => ({
       usr_raised: parseFloat(atob(row.usr_raised)),
       views_taken: parseFloat(atob(row.views_taken)),
-      average: parseFloat(atob(row.average))
+      average: parseFloat(atob(row.average)),
+      usr_target: parseFloat(atob(row.usr_target))
     }));
     return decodedMetrics
   } catch (error) {
