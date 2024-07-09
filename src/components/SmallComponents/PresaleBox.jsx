@@ -117,7 +117,7 @@ function PresaleBox() {
       setPriceFetched(true)
 
       let met = await fetchMetrics();
-
+      //console.log(met)
       let totalRaisedAmount = await presaleReadFunction("amountRaisedOverAll");
       totalRaisedAmount = +formatUnits(totalRaisedAmount?.toString(), 18);
 
@@ -138,9 +138,9 @@ function PresaleBox() {
       
       let totRaised = parseFloat(totalRaisedAmount)?.toFixed(2); 
       totRaised = parseFloat(totRaised) + met[0]?.usr_raised || 0; 
-      totRaised = toLocalFormat(parseFloat(totRaised)?.toFixed(2)); 
+      let totRaisedStr = toLocalFormat(parseFloat(totRaised)?.toFixed(2)); 
       setamountRaisedForAll(
-        totRaised
+        totRaisedStr
       );
       setFullRaised(true)
 
@@ -149,12 +149,15 @@ function PresaleBox() {
       setTotalSoldTokens(toLocalFormat(totSold));
       setFullGains(true)
 
+      let target = met[0]?.usr_target || 0
+      //console.log({target: target, achieved: parseFloat(totRaised) })
       // let progForAll = (+totalTokeSoldContract / 99612258802) * 100;
-      let progForAll = (+totalTokeSoldContract / +toSellAmount) * 100;
+      let progForAll = (+totRaised / +target) * 100;
       //progForAll = progForAll+ met[0]?.average || 0
       //console.log(progForAll.toFixed(2))
-      let prog  = parseFloat(progForAll)?.toFixed(0)*0.7465.toFixed(2)
-      prog = prog+ met[0]?.average || 0
+      //console.log(met[0]?.usr_target)
+      let prog  = parseFloat(progForAll).toFixed(2)
+      //prog = prog+ met[0]?.average || 0
       setprogressBarForAll(prog);
 
 
