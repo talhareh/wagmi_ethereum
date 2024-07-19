@@ -5,10 +5,11 @@ import { AppContext } from "./utils/utils";
 import { Route, Routes } from "react-router-dom";
 import { presaleReadFunction } from "./ConnectivityAssets/hooks";
 import Header from "./components/Header";
-
+import Moderator from "./pages/Moderator";
 function App() {
   const { account, chainId, adminAddress, setAdminAddress } =useContext(AppContext);
   const [openNetworkSwitch, setOpenNetworkSwitch] = useState(false);
+  
 
   useEffect(() => {
     if (account && chainId > 0 && (chainId !== 56 && chainId !== 97)) {
@@ -41,18 +42,29 @@ function App() {
           }
         />
       {adminAddress?.toLowerCase() === account?.toLowerCase()
-        && (
-      <Route
-        path="/admin"
-        element={
-          <>
-            <Header />
-            <Admin />
-          </>
-        }
-      />
-    ) 
-  }
+       && (
+        <Route
+          path="/admin"
+          element={
+            <>
+              <Header />
+              <Admin />
+            </>
+          }
+        />
+        ) 
+      }
+      
+          <Route
+            path="/moderator"
+            element={
+              <>
+                <Header />
+                <Moderator />
+              </>
+            }
+          />
+        
       </Routes>
     </>
   );
