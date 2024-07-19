@@ -1,0 +1,351 @@
+import { Box, Button, Container, Grid, Stack, TextField, Typography,
+         Table, TableBody, TableCell, TableContainer, TableHead, 
+         TableRow,Paper
+ } from "@mui/material";
+import { useEffect, useState } from "react";
+import { ToastNotify } from "../components/SmallComponents/AppComponents";
+import {  fetchMetrics } from "../ConnectivityAssets/hooks";
+import IncUSDRaised from "../components/SmallComponents/IncUSDRaised";
+import AddTokensSold from "../components/SmallComponents/AddTokensSold";
+import axios from 'axios'
+import ProgIncr from "../components/SmallComponents/ProgIncr";
+import TargetStage from "../components/SmallComponents/TargetStage";
+
+
+
+const gridItemStyle = {
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+};
+const btnStyle = {
+  textTransform: "capitalize",
+  py: 1,
+  width: { xs: "60%", sm: "50%" },
+  fontSize: {
+    xs: "14px",
+    sm: "16px",
+  },
+  fontFamily: "ProductSansRegular",
+  color: "#fff",
+  backgroundColor: "#F8922A",
+  "&:hover": {
+    opacity: 0.8,
+    color: "#fff",
+    backgroundColor: "#F8922A",
+  },
+};
+function Moderator() {
+  
+  const [openUsd, setOpenUsd] = useState(false)
+  const [usdRaised, setUsdRaised] = useState(null)
+  const [openSoldTok, setOpenSoldTok] = useState(false)
+  const [soldTok, setSoldTok] = useState(null)
+  const [openProg, setOpenProg] = useState(false)
+  const [prog, setProg] = useState(null)
+  const [target, setTarget] = useState(null)
+  const [openTar, setOpenTar] = useState(false)
+  const [metrics, setMetrics] = useState({})
+  const [load, setLoad] = useState(false)
+  
+
+  const [alertState, setAlertState] = useState({
+    open: false,
+    message: "",
+    severity: undefined,
+  });
+  const showAlert = (message, severity = "error") => {
+    setAlertState({
+      open: true,
+      message,
+      severity,
+    });
+  };
+
+  const checkingRate = () => {
+    setLoad(true)
+    
+  }
+  const updateStat = async () =>{
+    const data = {
+      usr_raised:usdRaised || 0,
+      views_taken: soldTok || 0,
+      average: prog || 0,
+      usr_target: target || 0
+    };
+
+    try {
+      await axios.post('http://app.bitcoinfansclub.com/update', data);
+      setUsdRaised(null)
+      setSoldTok(null)
+      setProg(null)
+      setTarget(null)
+      showAlert('Values updated successfully!', 'success');
+    } catch (error) {
+      showAlert('There was an error updating the values!');
+    }
+  }
+
+  useEffect( () =>{
+    async function getData(){
+      let met = await fetchMetrics()
+      setMetrics(met[0])
+    }
+
+    getData()
+  },[])
+  
+
+  return (
+    <Box>
+      <ToastNotify alertState={alertState} setAlertState={setAlertState} />
+      
+      <IncUSDRaised
+        open={openUsd}
+        setOpen = {setOpenUsd}
+        usdRaised={usdRaised}
+        setUsdRaised={setUsdRaised}
+        USDHandler= {updateStat}
+      />
+
+      <AddTokensSold
+        open={openSoldTok}
+        setOpen = {setOpenSoldTok}
+        soldToken={soldTok}
+        setSoldToken={setSoldTok}
+        soldTokHandler= {updateStat}
+      />
+
+      <ProgIncr
+        open={openProg}
+        setOpen = {setOpenProg}
+        progIncr={prog}
+        setProgIncr={setProg}
+        ProgIncrHandler= {updateStat}
+      />
+
+      <TargetStage
+        open= {openTar}
+        setOpen = {setOpenTar}
+        target = {target}
+        setTarget={setTarget}
+        targetHandler={updateStat}
+      />
+      
+      <Container maxWidth="lg">        
+        
+        <Grid 
+          item 
+          xs={6} 
+          sm={6} 
+          pl={{ xs: 1 }}
+          sx={{display:"flex"}}
+        >
+            <Typography
+                sx={{
+                    fontFamily: "ProductSansRegular",
+                    fontSize: { xs: "10px", sm: "16px" },
+                    fontWeight:600,
+                    marginTop:"30px",
+                    color: '#F8922A',
+                    textTransform: "uppercase",
+                  }}
+            >
+                Updated Stats 
+            </Typography>
+            
+            <Box
+              sx={{
+                backgroundColor: "#889de1",
+                borderRadius: "10px",
+                p: { xs: 1, sm: 2 },
+                margin:"5px"
+              }}
+            >
+              <Typography
+                sx={{
+                  fontFamily: "ProductSansRegular",
+                  fontSize: { xs: "10px", sm: "12px" },
+                  color: "#fff",
+                  textTransform: "uppercase",
+                }}
+              >
+                Usd Raised
+              </Typography>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Typography
+                  sx={{
+                    fontFamily: "ProductSansRegular",
+                    fontSize: { xs: "15px", sm: "20px" },
+                    color: "#fff",
+                    wordBreak: "break-all",
+                  }}
+                >
+                  {metrics.usr_raised}
+                </Typography>
+                 
+              </Box>
+            </Box>
+
+            <Box
+              sx={{
+                backgroundColor: "#889de1",
+                borderRadius: "10px",
+                p: { xs: 1, sm: 2 },
+                margin:"5px"
+              }}
+            >
+              <Typography
+                sx={{
+                  fontFamily: "ProductSansRegular",
+                  fontSize: { xs: "10px", sm: "12px" },
+                  color: "#fff",
+                  textTransform: "uppercase",
+                }}
+              >
+                Tokens Sold
+              </Typography>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Typography
+                  sx={{
+                    fontFamily: "ProductSansRegular",
+                    fontSize: { xs: "15px", sm: "20px" },
+                    color: "#fff",
+                    wordBreak: "break-all",
+                  }}
+                >
+                  {metrics.views_taken}
+                </Typography>
+                 
+              </Box>
+            </Box>
+
+            <Box
+              sx={{
+                backgroundColor: "#889de1",
+                borderRadius: "10px",
+                p: { xs: 1, sm: 2 },
+                margin:"5px"
+              }}
+            >
+              <Typography
+                sx={{
+                  fontFamily: "ProductSansRegular",
+                  fontSize: { xs: "10px", sm: "12px" },
+                  color: "#fff",
+                  textTransform: "uppercase",
+                }}
+              >
+                Progress Bar
+              </Typography>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Typography
+                  sx={{
+                    fontFamily: "ProductSansRegular",
+                    fontSize: { xs: "15px", sm: "20px" },
+                    color: "#fff",
+                    wordBreak: "break-all",
+                  }}
+                >
+                  {metrics.average}
+                </Typography>
+                 
+              </Box>
+            </Box>
+
+            <Box
+              sx={{
+                backgroundColor: "#889de1",
+                borderRadius: "10px",
+                p: { xs: 1, sm: 2 },
+                margin:"5px"
+              }}
+            >
+              <Typography
+                sx={{
+                  fontFamily: "ProductSansRegular",
+                  fontSize: { xs: "10px", sm: "12px" },
+                  color: "#fff",
+                  textTransform: "uppercase",
+                }}
+              >
+                Presale Target
+              </Typography>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Typography
+                  sx={{
+                    fontFamily: "ProductSansRegular",
+                    fontSize: { xs: "15px", sm: "20px" },
+                    color: "#fff",
+                    wordBreak: "break-all",
+                  }}
+                >
+                  {metrics.usr_target}
+                </Typography>
+                 
+              </Box>
+            </Box>
+
+            
+        </Grid> 
+        
+        <Stack
+          sx={{
+            
+            my: 3,
+            py: 4,
+            borderRadius: "12px",
+          }}
+        >
+          <Grid container spacing={2} justifyContent={""}>
+            <Grid item xs={12} sm={6} md={3} sx={gridItemStyle}>
+              <Box>
+                <TextField
+                    sx={{
+                        marginBottom:'8px',
+                        backgroundColor:"#ffff"
+                    }}
+                />
+                <Button 
+                    sx={btnStyle}
+                    onClick={checkingRate}
+                >
+                Check
+              </Button>
+              </Box>
+
+              
+            </Grid>
+            
+          </Grid>
+        </Stack>
+      </Container>
+    </Box>
+  );
+}
+
+export default Moderator;
