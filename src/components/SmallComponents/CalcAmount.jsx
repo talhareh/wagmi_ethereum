@@ -38,7 +38,7 @@ import {
     open,
     setOpen,
     calcUsd,
-    updateAll,
+    handleUpdate,
   }) {
     const handleClose = () => {
       setOpen(false);
@@ -46,9 +46,13 @@ import {
     };
     let price = 0.0000246
     let target = 400000
-    let calcTok = (calcUsd / price).toFixed(3)
+    let calcTok = (calcUsd / price).toFixed(1)
     let prog = (calcUsd / target)* 100
     
+    const handleUpdateClick = () => {
+      handleUpdate(calcTok, prog);
+      handleClose();
+    };
     return (
       <Dialog
         sx={modalStyle}
@@ -119,7 +123,7 @@ import {
           
           <Stack mt={2} alignItems={"center"}>
             <Button
-              onClick={updateAll}
+              onClick={handleUpdateClick}
               sx={{
                 textTransform: "capitalize",
                 py: 1,

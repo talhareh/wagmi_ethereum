@@ -6,9 +6,6 @@ import {  fetchMetrics } from "../ConnectivityAssets/hooks";
 import CalcAmount from "../components/SmallComponents/CalcAmount";
 import axios from 'axios'
 
-import './mod.css'
-
-
 
 const btnStyle = {
   textTransform: "capitalize",
@@ -58,10 +55,16 @@ function Moderator() {
   };
 
 
-  const updateAll = async () =>{
+  const handleUpdate = (calcTok, prog) => {
+    setSoldTok(calcTok);
+    setProg(prog);
+    updateAll(calcTok, prog);
+  };
+
+  const updateAll = async (calcTok, prog) =>{
     const data = {
-      usr_raised:usdRaised || 0,
-      views_taken: soldTok || 0,
+      usr_raised:calcUsd || 0,
+      views_taken: calcTok || 0,
       average: prog || 0,
       usr_target: target || 0
     };
@@ -89,7 +92,7 @@ function Moderator() {
           open={load}
           setOpen={setLoad}
           calcUsd = {calcUsd}
-          updateAll={updateAll}
+          handleUpdate={handleUpdate}
         />
         <Container maxWidth="lg">
         
