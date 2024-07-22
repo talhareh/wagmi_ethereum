@@ -9,15 +9,11 @@ import axios from 'axios'
 import './mod.css'
 
 
-const gridItemStyle = {
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-};
+
 const btnStyle = {
   textTransform: "capitalize",
   py: 1,
-  width: { xs: "60%", sm: "50%" },
+  width: { xs: "60%", sm: "10%" },
   fontSize: {
     xs: "14px",
     sm: "16px",
@@ -40,12 +36,17 @@ function Moderator() {
   const [target, setTarget] = useState(null)
 
   const [metrics, setMetrics] = useState({})
-  const [calcUsd, setCalcUsd] = useState(0)
-  const [calcTok, setCalcTok] = useState(0)
+  const [calcUsd, setCalcUsd] = useState(null)
+  const [calcTok, setCalcTok] = useState(null)
   const [esProg, calcEsProg] = useState(0)
   const [load, setLoad] = useState(false)
   let price = 0.0000246
 
+  const handleChange = (event) => {
+    
+    const newValue = event.target.value.replace(/[^0-9\b]/g, '');
+    setCalcUsd(newValue);
+  };
   const [alertState, setAlertState] = useState({
     open: false,
     message: "",
@@ -261,13 +262,12 @@ function Moderator() {
                 </Box>    
             </Grid> 
           </Grid>
-            {/* Start of second Row*/ }
             
             
-            <Grid item xs={12} sm={6} md={3}>
-              <Box 
+            {/* Start of second Row*/ }   
+            <Box 
               sx={{
-                    display: 'flex',
+                    display: 'block',
                     flexDirection: 'column', 
                      
                   }}>
@@ -276,61 +276,19 @@ function Moderator() {
                     marginBottom: '8px',
                     backgroundColor: "#ffff"
                   }}
+                  placeholder="Enter USD here"
+                  autoComplete="off"
+                  value={calcUsd}
+                  onChange={handleChange}
                 />
-                <Button 
+            </Box>
+            <Button 
                   sx={btnStyle}
                   onClick={checkingRate}
                 >
                   Check
                 </Button>
-              </Box>
-            </Grid>
-            
-            <Grid item xs={12}>
-              <Stack
-                sx={{
-                  my: 3,
-                  py: 4,
-                  borderRadius: "12px",
-                  backgroundColor: "#f5f5f5",
-                  padding: 2
-                }}
-              >
-                <Grid container spacing={2}>
-                  <Grid item xs={4}>
-                    <Typography sx={{ fontWeight: 600 }}>USD</Typography>
-                  </Grid>
-                  <Grid item xs={4}>
-                    <Typography sx={{ fontWeight: 600 }}>Tokens</Typography>
-                  </Grid>
-                  <Grid item xs={4}>
-                    <Typography sx={{ fontWeight: 600 }}>Progress Bar</Typography>
-                  </Grid>
-
-                  <Grid item xs={4}>
-                    <Typography>{calcUsd}</Typography>
-                  </Grid>
-                  <Grid item xs={4}>
-                    <Typography>{calcTok}</Typography>
-                  </Grid>
-                  <Grid item xs={4}>
-                    <Box sx={{ width: '100%' }}>
-                      <Typography
-                        sx={{
-                          height: 10,
-                          borderRadius: 5,
-                        }}
-                      >
-                        {esProg}
-                      </Typography>
-                    </Box>
-                  </Grid>
-                </Grid>
-              </Stack>
-            </Grid>
-            
-          
-          
+                     
         </Container>
       
     </Box>
