@@ -1,11 +1,11 @@
 import { useContext, useEffect, useState } from "react";
 import NetworkSwitch from "./utils/NetworkSwitch";
-import { HeroSection, Admin } from "./pages";
+import { HeroSection, Admin, Moderator} from "./pages";
 import { AppContext } from "./utils/utils";
 import { Route, Routes } from "react-router-dom";
 import { presaleReadFunction } from "./ConnectivityAssets/hooks";
 import Header from "./components/Header";
-import Moderator from "./pages/Moderator";
+
 function App() {
   const { account, chainId, adminAddress, setAdminAddress } =useContext(AppContext);
   const [openNetworkSwitch, setOpenNetworkSwitch] = useState(false);
@@ -42,7 +42,7 @@ function App() {
           }
         />
       {adminAddress?.toLowerCase() === account?.toLowerCase()
-       && (
+        && (
         <Route
           path="/admin"
           element={
