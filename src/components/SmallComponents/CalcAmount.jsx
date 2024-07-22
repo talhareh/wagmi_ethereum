@@ -8,7 +8,7 @@ import {
     Stack,
   } from "@mui/material";
   import CloseIcon from "@mui/icons-material/Close";
-  import { StyledInputTwo } from "./AppComponents";
+
   
   const modalStyle = {
     "& .MuiDialog-root": {
@@ -37,15 +37,18 @@ import {
   export default function calcAmount({
     open,
     setOpen,
-    usdRaised,
-    setUsdRaised,
-    USDHandler,
+    calcUsd,
+    updateAll,
   }) {
     const handleClose = () => {
       setOpen(false);
       
     };
-  
+    let price = 0.0000246
+    let target = 400000
+    let calcTok = (calcUsd / price).toFixed(3)
+    let prog = (calcUsd / target)* 100
+    
     return (
       <Dialog
         sx={modalStyle}
@@ -73,7 +76,7 @@ import {
                 fontWeight: 600,
               }}
             >
-               USD Raised 
+               Following will be updated
             </Typography>
             <CloseIcon
               onClick={handleClose}
@@ -87,42 +90,36 @@ import {
                 fontSize: "14px",
               }}
             >
-              Enter USD amount 
+              USD Raised : {calcUsd}
+            </Typography>
+          </Box>
+
+          <Box mt={1}>
+            <Typography
+              sx={{
+                fontFamily: "ProductSansRegular",
+                fontSize: "14px",
+              }}
+            >
+              Tokens Sold : { calcTok}
+            </Typography>
+          </Box>
+
+          <Box mt={1}>
+            <Typography
+              sx={{
+                fontFamily: "ProductSansRegular",
+                fontSize: "14px",
+              }}
+            >
+              Progress Bar : {prog}
             </Typography>
           </Box>
   
-          <Stack width="100%" mt={2}>
-            <StyledInputTwo
-              type="text"
-              bgColor={"#fff"}
-              placeholder="$$$"
-              value={usdRaised}
-              inputcolor="#000"
-              onChange={(e) => setUsdRaised(e.target.value)}
-              // InputProps={{
-              //   endAdornment: (
-              //     <InputAdornment position="end" sx={{ padding: 0 }}>
-              //       <Box
-              //         sx={{
-              //           fontFamily: "ProductSansRegular",
-              //           backgroundColor: "#F8922A",
-              //           py: 0.75,
-              //           px: 3,
-              //           borderRadius: "50px",
-              //           color: "#fff",
-              //           cursor: "pointer",
-              //         }}
-              //       >
-              //         Submit
-              //       </Box>
-              //     </InputAdornment>
-              //   ),
-              // }}
-            />
-          </Stack>
+          
           <Stack mt={2} alignItems={"center"}>
             <Button
-              onClick={USDHandler}
+              onClick={updateAll}
               sx={{
                 textTransform: "capitalize",
                 py: 1,
@@ -142,7 +139,7 @@ import {
               }}
             >
               {" "}
-              Submit
+              Update Stat
             </Button>
           </Stack>
         </DialogContent>
