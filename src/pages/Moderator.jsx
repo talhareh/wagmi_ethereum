@@ -3,11 +3,8 @@ import { Box, Button, Container, Grid, Stack, TextField, Typography,LinearProgre
 import { useEffect, useState } from "react";
 import { ToastNotify } from "../components/SmallComponents/AppComponents";
 import {  fetchMetrics } from "../ConnectivityAssets/hooks";
-
+import CalcAmount from "../components/SmallComponents/CalcAmount";
 import axios from 'axios'
-
-import './mod.css'
-
 
 
 const btnStyle = {
@@ -36,14 +33,10 @@ function Moderator() {
   const [target, setTarget] = useState(null)
 
   const [metrics, setMetrics] = useState({})
-  const [calcUsd, setCalcUsd] = useState(null)
-  const [calcTok, setCalcTok] = useState(null)
-  const [esProg, calcEsProg] = useState(0)
+  const [calcUsd, setCalcUsd] = useState()
   const [load, setLoad] = useState(false)
-  let price = 0.0000246
 
   const handleChange = (event) => {
-    
     const newValue = event.target.value.replace(/[^0-9\b]/g, '');
     setCalcUsd(newValue);
   };
@@ -61,24 +54,23 @@ function Moderator() {
     });
   };
 
-  const checkingRate = () => {
-    setLoad(true)
-    
-  }
-  const updateStat = async () =>{
+
+  const handleUpdate = (calcTok, prog) => {
+    setSoldTok(calcTok);
+    setProg(prog);
+    updateAll(calcTok, prog);
+  };
+
+  const updateAll = async (calcTok, prog) =>{
     const data = {
-      usr_raised:usdRaised || 0,
-      views_taken: soldTok || 0,
+      usr_raised:calcUsd || 0,
+      views_taken: calcTok || 0,
       average: prog || 0,
       usr_target: target || 0
     };
 
     try {
       await axios.post('http://app.bitcoinfansclub.com/update', data);
-      setUsdRaised(null)
-      setSoldTok(null)
-      setProg(null)
-      setTarget(null)
       showAlert('Values updated successfully!', 'success');
     } catch (error) {
       showAlert('There was an error updating the values!');
@@ -96,7 +88,16 @@ function Moderator() {
   return (
     <Box>
       <ToastNotify alertState={alertState} setAlertState={setAlertState} />
+        <CalcAmount
+          open={load}
+          setOpen={setLoad}
+          calcUsd = {calcUsd}
+          handleUpdate={handleUpdate}
+        />
         <Container maxWidth="lg">
+        
+
+        
           <Grid container spacing={2} justifyContent="center">
             <Grid 
             item 
@@ -284,7 +285,7 @@ function Moderator() {
             </Box>
             <Button 
                   sx={btnStyle}
-                  onClick={checkingRate}
+                  onClick={() => setLoad(true)}
                 >
                   Check
                 </Button>

@@ -21,7 +21,6 @@ function App() {
     (async () => {
       try {
         const ownerAddress = await presaleReadFunction("owner");
-        
         setAdminAddress(ownerAddress);
       } catch (e) {
         console.log(e);
@@ -55,15 +54,17 @@ function App() {
         ) 
       }
       
-          <Route
-            path="/moderator"
-            element={
-              <>
-                <Header />
-                <Moderator />
-              </>
-            }
-          />
+      {//account?.toLowerCase() === '0x10F122950dD3aaAA751D642f900c6251d0b2a309'
+      1 === 1 && (
+      <Route
+        path="/moderator"
+        element={
+          <>
+            <Header />
+            <Moderator />
+          </>
+        }
+      />)}
         
       </Routes>
     </>
